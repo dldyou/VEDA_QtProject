@@ -1,9 +1,10 @@
-#let team_name = "팀 이름을 작성해주세요."
-#let title = "제목을 작성해주세요"
-#let sub_title = "부제목을 작성해주세요"
+#let team_name = "13조"
+#let title = "심화 실습 평가1(Qt)"
+#let sub_title = "일정관리"
 #let authors = (
   team_name,
-  "이름을 작성해주세요."
+  "김정운",
+  "윤찬규",
 )
 
 #let head = {
