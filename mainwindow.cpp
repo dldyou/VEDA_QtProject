@@ -145,6 +145,13 @@ void MainWindow::on_btnRemove_clicked() {
         return;
     }
 
+    QMessageBox::StandardButton reply =
+        QMessageBox::question(this,"삭제 확인","정말 삭제하시겠습니까?",QMessageBox::Yes | QMessageBox::No);
+
+    if (reply != QMessageBox::Yes) {
+        return;
+    }
+
     Schedule selected = currentViewList[row];
 
     QList<Schedule> all = scheduleManager->getSchedules();
