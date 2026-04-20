@@ -15,6 +15,7 @@ public:
     explicit ScheduleEditorDialog(QWidget *parent = nullptr);
 
     void setDate(const QDate &date);
+    void setSchedule(const Schedule &schedule);
 
     ~ScheduleEditorDialog();
 

@@ -26,6 +26,10 @@ private slots:
 
     void on_btnAdd_clicked();
 
+    void on_btnEdit_clicked();
+
+    void on_btnRemove_clicked();
+
 private:
     Ui::MainWindow *ui;
     QDate selectedDate;
