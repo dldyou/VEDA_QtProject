@@ -6,7 +6,8 @@
 #include <QFile>
 #include <QList>
 
-class ScheduleManager {
+class ScheduleManager : public QObject {
+    Q_OBJECT
 public:
     ScheduleManager();
     // CRUD

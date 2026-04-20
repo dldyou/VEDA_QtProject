@@ -16,8 +16,6 @@ public:
     ~ScheduleEditorDialog();
 
 private slots:
-    void on_btnSave_2_clicked();
-
     void on_btnSave_clicked();
 
     void on_btnCancel_clicked();
