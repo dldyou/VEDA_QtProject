@@ -30,7 +30,7 @@ void ScheduleEditorDialog::on_btnSave_clicked() {
 
     // date, time 가져옴
     QDateTime startDateTime = ui->deStart->dateTime();
-    QDateTime endDateTime   = ui->deEnd->dateTime();
+    QDateTime endDateTime = ui->deEnd->dateTime();
 
     if (title.isEmpty()) {
         QMessageBox::warning(this, "경고", "제목을 입력하세요.");

@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    applyStyleSheet(this, ":/style/style.qss");
+    applyStyleSheet(this, ":/style/style/style.qss");
 
     ui->cwCalender->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
 
@@ -54,20 +54,21 @@ MainWindow::~MainWindow() {
 void MainWindow::on_cwCalender_selectionChanged() {
     selectedDate = ui->cwCalender->selectedDate();
     ui->lblSelectedDate->setText(selectedDate.toString(timeFormat));
+    ui->leSearch->clear();
     updateTable();
 }
 
 void MainWindow::updateTable()
 {
-    ui->twScheduleList->setRowCount(0);
-
-
     QString searchText = ui->leSearch->text();
+
+    ui->twScheduleList->setRowCount(0);
 
     // 화면 데이터 결정
     if (searchText.isEmpty()) {
         currentViewList = scheduleManager->getSchedulesForDate(selectedDate);
-    } else {
+    }
+    else {
         currentViewList = scheduleManager->getSchedulesByContainText(searchText);
     }
 
@@ -76,15 +77,9 @@ void MainWindow::updateTable()
         const Schedule &schedule = currentViewList[i];
 
         ui->twScheduleList->insertRow(i);
-
-        ui->twScheduleList->setItem(i, 0,
-                                    new QTableWidgetItem(schedule.getTitle()));
-
-        ui->twScheduleList->setItem(i, 1,
-                                    new QTableWidgetItem(schedule.getStartTime().toString(timeFormat)));
-
-        ui->twScheduleList->setItem(i, 2,
-                                    new QTableWidgetItem(schedule.getEndTime().toString(timeFormat)));
+        ui->twScheduleList->setItem(i, 0, new QTableWidgetItem(schedule.getTitle()));
+        ui->twScheduleList->setItem(i, 1, new QTableWidgetItem(schedule.getStartTime().toString(timeFormat)));
+        ui->twScheduleList->setItem(i, 2, new QTableWidgetItem(schedule.getEndTime().toString(timeFormat)));
     }
 }
 void MainWindow::on_btnAdd_clicked() {
@@ -118,7 +113,7 @@ void MainWindow::on_btnEdit_clicked() {
     dlg.setSchedule(selected);
 
     connect(&dlg, &ScheduleEditorDialog::scheduleSaved,
-            this, [this, selected](const Schedule &s){
+            this, [this, selected](const Schedule &s) {
 
                 // 기존 데이터 찾아서 수정
                 QList<Schedule> all = scheduleManager->getSchedules();
@@ -146,7 +141,7 @@ void MainWindow::on_btnRemove_clicked() {
     }
 
     QMessageBox::StandardButton reply =
-        QMessageBox::question(this,"삭제 확인","정말 삭제하시겠습니까?",QMessageBox::Yes | QMessageBox::No);
+        QMessageBox::question(this, "삭제 확인", "정말 삭제하시겠습니까?", QMessageBox::Yes | QMessageBox::No);
 
     if (reply != QMessageBox::Yes) {
         return;

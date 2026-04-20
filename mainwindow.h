@@ -33,11 +33,10 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QDate selectedDate;
+    QString timeFormat = "yyyy-MM-dd";
 
     ScheduleManager *scheduleManager;
-
-    QList<Schedule> currentViewList; // 추가
-    QString timeFormat = "yyyy-MM-dd";
+    QList<Schedule> currentViewList;
 
     void updateTable();
 };
