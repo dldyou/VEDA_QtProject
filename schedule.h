@@ -3,11 +3,12 @@
 
 #include <QDateTime>
 #include <QJsonObject>
+#include <QMessageBox>
 
 class Schedule {
 public:
     Schedule();
-    Schedule(QString, QString, QDateTime, QDateTime);
+    Schedule(QString title, QString description, QDateTime startTime, QDateTime endTime);
 
     QJsonObject toJsonObject() const;
     static Schedule fromJsonObject(const QJsonObject &obj);
@@ -23,4 +24,4 @@ private:
     QDateTime endTime;
 };
 
-#endif // SCHEDULE_H
+#endif
