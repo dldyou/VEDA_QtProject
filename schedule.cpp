@@ -35,3 +35,26 @@ Schedule Schedule::fromJsonObject(const QJsonObject &obj) {
     s.endTime = QDateTime::fromString(obj["end_time"].toString(), Qt::ISODate);
     return s;
 }
+
+void Schedule::setTitle(const QString &t) {
+    title = t;
+}
+
+void Schedule::setDescription(const QString &d) {
+    description = d;
+}
+
+void Schedule::setStartTime(const QDateTime &s) {
+    startTime = s;
+}
+
+void Schedule::setEndTime(const QDateTime &e) {
+    endTime = e;
+}
+QDateTime Schedule::getStartTime() const {
+    return startTime;
+}
+
+QDateTime Schedule::getEndTime() const {
+    return endTime;
+}

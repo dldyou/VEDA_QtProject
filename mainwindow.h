@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QDate>
 #include <QList>
-
+#include "schedulemanager.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -21,8 +21,11 @@ public:
 private slots:
     void on_cwCalender_selectionChanged();
 
+    void on_btnAdd_clicked();
+
 private:
     Ui::MainWindow *ui;
+    ScheduleManager scheduleManager;
     QDate selectedDate;
 };
 #endif // MAINWINDOW_H
