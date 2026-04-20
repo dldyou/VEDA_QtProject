@@ -18,10 +18,8 @@ public:
     const QList<Schedule>& getSchedules() const { return schedules; }
     QList<Schedule> getSchedulesForDate(const QDate &date) const;
     // 파일 입출력
-    bool saveSchedules(const QString &fileName);
-    bool loadSchedules(const QString &fileName);
-    // develop factory
-    void setStandardSchedules();
+    bool saveSchedules(const QString &fileName = "schedules.json");
+    bool loadSchedules(const QString &fileName = "schedules.json");
 signals:
     // 데이터가 변할 때마다 이 신호를 발생시켜 UI에 알림
     void schedulesChanged();

@@ -41,6 +41,16 @@ bool ScheduleManager::saveSchedules(const QString &fileName) {
 bool ScheduleManager::loadSchedules(const QString &fileName) {
     QFile file(fileName);
 
+    if (!file.exists()) {
+        if (file.open(QIODevice::WriteOnly)) {
+            file.write("[]");
+            file.close();
+        }
+        else {
+            return false;
+        }
+    }
+
     if (!file.open(QIODevice::ReadOnly)) {
         return false;
     }
@@ -53,6 +63,8 @@ bool ScheduleManager::loadSchedules(const QString &fileName) {
         return false;
     }
 
+    schedules.clear();
+
     QJsonArray jsonArray = doc.array();
     for (const auto &value : jsonArray) {
         schedules.append(Schedule::fromJsonObject(value.toObject()));
@@ -60,23 +72,6 @@ bool ScheduleManager::loadSchedules(const QString &fileName) {
     }
 
     return true;
-}
-
-void ScheduleManager::setStandardSchedules() {
-    Schedule schedule1 = Schedule("t1", "d1", QDateTime().currentDateTime().addDays(1), QDateTime().currentDateTime().addDays(1));
-    Schedule schedule2 = Schedule("t2", "d2", QDateTime().currentDateTime(), QDateTime().currentDateTime().addDays(2));
-
-    addSchedule(schedule1);
-    addSchedule(schedule2);
-
-    if (saveSchedules("schedules.json")) {
-        qDebug() << "저장 성공";
-    }
-    else {
-        qDebug() << "저장 실패";
-    }
-
-    schedules.clear();
 }
 
 QList<Schedule> ScheduleManager::getSchedulesForDate(const QDate &date) const {

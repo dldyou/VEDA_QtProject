@@ -35,9 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(scheduleManager, &ScheduleManager::schedulesChanged, this, &MainWindow::updateTable);
 
     // 저장을 위해 순서 수정
-    if (!scheduleManager->loadSchedules("schedules.json")) {
-        scheduleManager->setStandardSchedules();
-    }
+    scheduleManager->loadSchedules();
 
     ui->twScheduleList->verticalHeader()->setVisible(false);
     ui->twScheduleList->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
@@ -83,13 +81,11 @@ void MainWindow::on_btnAdd_clicked() {
     connect(&dlg, &ScheduleEditorDialog::scheduleSaved,
             this, [this](const Schedule &s){
                 scheduleManager->addSchedule(s);
-                scheduleManager->saveSchedules("schedules.json");
+                scheduleManager->saveSchedules();
 
                 qDebug() << "시작 날짜:" << s.getStartTime().toString(Qt::ISODate);
                 qDebug() << "끝 날짜:" << s.getEndTime().toString(Qt::ISODate);
                 qDebug() << "저장 완료";
-
-                updateTable(); // UI 갱신
             });
 
     dlg.exec();
@@ -120,8 +116,7 @@ void MainWindow::on_btnEdit_clicked() {
                     }
                 }
 
-                scheduleManager->saveSchedules("schedules.json");
-                updateTable();
+                scheduleManager->saveSchedules();
             });
 
     dlg.exec();
@@ -169,8 +164,5 @@ void MainWindow::on_btnRemove_clicked() {
     }
 
     // 변경된 일정 데이터를 JSON 파일에 저장
-    scheduleManager->saveSchedules("schedules.json");
-
-    // UI 테이블 다시 갱신
-    updateTable();
+    scheduleManager->saveSchedules();
 }
