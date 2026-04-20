@@ -14,6 +14,7 @@ public:
     void addSchedule(const Schedule &schedule);
     void updateSchedule(int index, const Schedule &schedule);
     void removeSchedule(int index);
+    QList<Schedule> getSchedulesByContainText(const QString &text) const;
     // getter
     const QList<Schedule>& getSchedules() const { return schedules; }
     QList<Schedule> getSchedulesForDate(const QDate &date) const;

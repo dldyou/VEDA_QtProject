@@ -33,8 +33,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     scheduleManager = new ScheduleManager(this);
     connect(scheduleManager, &ScheduleManager::schedulesChanged, this, &MainWindow::updateTable);
+    connect(ui->leSearch, &QLineEdit::textChanged, this, &MainWindow::updateTable);
 
-    // 저장을 위해 순서 수정
     scheduleManager->loadSchedules();
 
     ui->twScheduleList->verticalHeader()->setVisible(false);
@@ -43,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->twScheduleList->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
 
     selectedDate = QDate::currentDate();
+    ui->lblSelectedDate->setText(selectedDate.toString("yyyy-MM-dd"));
     updateTable();
 }
 
@@ -52,13 +53,23 @@ MainWindow::~MainWindow() {
 
 void MainWindow::on_cwCalender_selectionChanged() {
     selectedDate = ui->cwCalender->selectedDate();
+    ui->lblSelectedDate->setText(selectedDate.toString("yyyy-MM-dd"));
     updateTable();
 }
 
 void MainWindow::updateTable() {
     ui->twScheduleList->setRowCount(0);
-    const QList<Schedule>& schedules = scheduleManager->getSchedulesForDate(selectedDate);
     QString timeFormat = "yyyy-MM-dd";
+    QString searchText = ui->leSearch->text();
+    QList<Schedule> schedules;
+
+    if (searchText.isEmpty()) {
+        schedules = scheduleManager->getSchedulesForDate(selectedDate);
+    }
+    else {
+        schedules = scheduleManager->getSchedulesByContainText(searchText);
+    }
+
 
     for (int i = 0; i < schedules.size(); i++) {
         const Schedule &schedule = schedules[i];
