@@ -59,29 +59,25 @@ void MainWindow::on_cwCalender_selectionChanged() {
 
 void MainWindow::updateTable() {
     ui->twScheduleList->setRowCount(0);
-    QString timeFormat = "yyyy-MM-dd";
+
     QString searchText = ui->leSearch->text();
-    QList<Schedule> schedules;
 
+    // 화면 데이터 결정
     if (searchText.isEmpty()) {
-        schedules = scheduleManager->getSchedulesForDate(selectedDate);
-    }
-    else {
-        schedules = scheduleManager->getSchedulesByContainText(searchText);
+        currentViewList = scheduleManager->getSchedulesForDate(selectedDate);
+    } else {
+        currentViewList = scheduleManager->getSchedulesByContainText(searchText);
     }
 
+    // 테이블에 뿌리기
+    for (int i = 0; i < currentViewList.size(); i++) {
+        const Schedule &schedule = currentViewList[i];
 
-    for (int i = 0; i < schedules.size(); i++) {
-        const Schedule &schedule = schedules[i];
         ui->twScheduleList->insertRow(i);
-
-        qDebug() << schedule.getTitle() << " " << schedule.getStartTime() << " " << schedule.getEndTime();
-
         ui->twScheduleList->setItem(i, 0, new QTableWidgetItem(schedule.getTitle()));
-        ui->twScheduleList->setItem(i, 1, new QTableWidgetItem(schedule.getStartTime().toString(timeFormat)));
-        ui->twScheduleList->setItem(i, 2, new QTableWidgetItem(schedule.getEndTime().toString(timeFormat)));
+        ui->twScheduleList->setItem(i, 1, new QTableWidgetItem(schedule.getStartTime().toString("yyyy-MM-dd")));
+        ui->twScheduleList->setItem(i, 2, new QTableWidgetItem(schedule.getEndTime().toString("yyyy-MM-dd")));
     }
-    qDebug() << selectedDate;
 }
 
 void MainWindow::on_btnAdd_clicked() {
@@ -104,10 +100,12 @@ void MainWindow::on_btnAdd_clicked() {
 
 void MainWindow::on_btnEdit_clicked() {
     int row = ui->twScheduleList->currentRow();
-    if (row < 0) return;
+    if (row < 0) {
+        QMessageBox::warning(this, "오류", "수정할 항목을 선택해주세요.");
+        return;
+    }
 
-    QList<Schedule> list = scheduleManager->getSchedulesForDate(selectedDate);
-    Schedule selected = list[row];
+    Schedule selected = currentViewList[row];
 
     ScheduleEditorDialog dlg(this);
     dlg.setSchedule(selected);
@@ -134,10 +132,7 @@ void MainWindow::on_btnEdit_clicked() {
 }
 
 void MainWindow::on_btnRemove_clicked() {
-    // 현재 선택된 테이블 행 인덱스 가져오기
     int row = ui->twScheduleList->currentRow();
-
-    // 아무것도 선택되지 않았으면 종료
     if (row < 0) {
         QMessageBox::warning(this, "오류", "삭제할 항목을 선택해주세요.");
         return;
@@ -148,32 +143,20 @@ void MainWindow::on_btnRemove_clicked() {
         return;
     }
 
+    // 화면 기준 데이터 사용
+    Schedule selected = currentViewList[row];
 
-    // 선택된 날짜 기준으로 일정 리스트 가져오기 (화면에 보이는 데이터)
-    QList<Schedule> list = scheduleManager->getSchedulesForDate(selectedDate);
-
-    // 선택된 row에 해당하는 Schedule 객체 추출
-    Schedule selected = list[row];
-
-    // 전체 일정 데이터 가져오기 (파일 기준 전체 데이터)
+    // 전체 데이터에서 찾아서 삭제
     QList<Schedule> all = scheduleManager->getSchedules();
 
-    // 전체 데이터에서 동일한 일정 찾기
     for (int i = 0; i < all.size(); i++) {
-
-        // startTime + title이 같은 항목을 삭제 대상으로 판단
-        // (현재 구조에서는 사실상 "가짜 ID 역할")
         if (all[i].getStartTime() == selected.getStartTime() &&
             all[i].getTitle() == selected.getTitle()) {
 
-            // 해당 일정 삭제
             scheduleManager->removeSchedule(i);
-
-            // 첫 번째로 찾은 항목만 삭제하고 종료
             break;
         }
     }
-
-    // 변경된 일정 데이터를 JSON 파일에 저장
+    // 저장
     scheduleManager->saveSchedules();
 }

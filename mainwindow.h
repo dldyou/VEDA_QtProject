@@ -35,6 +35,8 @@ private:
     QDate selectedDate;
     ScheduleManager *scheduleManager;
 
+    QList<Schedule> currentViewList; // 추가
+
     void updateTable();
 };
 #endif // MAINWINDOW_H
