@@ -24,23 +24,23 @@
    </property>
    <layout class="QFormLayout" name="formLayout">
     <item row="0" column="0">
-     <widget class="QLabel" name="lblTIME_2">
+     <widget class="QLabel" name="lblTime">
       <property name="text">
        <string>TIME</string>
       </property>
      </widget>
     </item>
     <item row="0" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QDateTimeEdit" name="dateedit1">
+       <widget class="QDateTimeEdit" name="deStart">
         <property name="calendarPopup">
          <bool>true</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QDateTimeEdit" name="dateedit2">
+       <widget class="QDateTimeEdit" name="deEnd">
         <property name="calendarPopup">
          <bool>true</bool>
         </property>
@@ -49,14 +49,14 @@
      </layout>
     </item>
     <item row="1" column="0">
-     <widget class="QLabel" name="lblTitle_2">
+     <widget class="QLabel" name="lblTitle">
       <property name="text">
        <string>TITLE</string>
       </property>
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QLineEdit" name="lineeditTitle"/>
+     <widget class="QLineEdit" name="leTitle"/>
     </item>
     <item row="2" column="0">
      <widget class="QLabel" name="lblContent">
@@ -66,7 +66,7 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QTextEdit" name="texteditContent"/>
+     <widget class="QTextEdit" name="teContent"/>
     </item>
    </layout>
   </widget>
