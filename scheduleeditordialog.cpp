@@ -30,28 +30,24 @@ void ScheduleEditorDialog::on_btnSave_clicked()
     QString title = ui->lineeditTitle->text();
     QString content = ui->texteditContent->toPlainText();
 
-    QDate startDate = ui->dateedit1->date();
-    QDate endDate = ui->dateedit2->date();
-
-    QTime startTime = QTime(9, 0);
-    QTime endTime = QTime(10, 0);
-
-    QDateTime startDateTime(startDate, startTime);
-    QDateTime endDateTime(endDate, endTime);
+    // date, time 가져옴
+    QDateTime startDateTime = ui->dateedit1->dateTime();
+    QDateTime endDateTime   = ui->dateedit2->dateTime();
 
     if (title.isEmpty()) {
         QMessageBox::warning(this, "경고", "제목을 입력하세요.");
         return;
     }
 
-    Schedule schedule;
-    schedule.setTitle(title);
-    schedule.setDescription(content);
-    schedule.setStartTime(startDateTime);
-    schedule.setEndTime(endDateTime);
+    // 시간 역전 방지
+    if (startDateTime > endDateTime) {
+        QMessageBox::warning(this, "경고", "종료 시간이 시작 시간보다 빠릅니다.");
+        return;
+    }
+
+    Schedule schedule(title, content, startDateTime, endDateTime);
 
     emit scheduleSaved(schedule);
-
     accept();
 }
 
@@ -60,9 +56,18 @@ void ScheduleEditorDialog::setDate(const QDate &date){
     ui->dateedit2->setDate(date);
 }
 
+void ScheduleEditorDialog::setSchedule(const Schedule &schedule)
+{
+    ui->lineeditTitle->setText(schedule.getTitle());
+    ui->texteditContent->setText(schedule.getDescription());
+
+    ui->dateedit1->setDateTime(schedule.getStartTime());
+    ui->dateedit2->setDateTime(schedule.getEndTime());
+}
+
 void ScheduleEditorDialog::on_btnCancel_clicked(){
 
-    reject();  //창 닫기
+    reject();  // 그냥 창 닫기
 
 }
 
