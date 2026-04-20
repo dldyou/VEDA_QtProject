@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ScheduleManager scheduleManager;
 
+    scheduleManager.setStandardSchedules();
     scheduleManager.loadSchedules("schedules.json");
 }
 

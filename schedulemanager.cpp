@@ -58,11 +58,23 @@ bool ScheduleManager::loadSchedules(const QString &fileName) {
     QJsonArray jsonArray = doc.array();
     for (const auto &value : jsonArray) {
         schedules.append(Schedule::fromJsonObject(value.toObject()));
+        qDebug() << value;
     }
 
     return true;
 }
 
 void ScheduleManager::setStandardSchedules() {
+    Schedule schedule1 = Schedule("t1", "d1", QDateTime().currentDateTime().addDays(1), QDateTime().currentDateTime().addDays(1));
+    Schedule schedule2 = Schedule("t2", "d2", QDateTime().currentDateTime(), QDateTime().currentDateTime().addDays(2));
 
+    addSchedule(schedule1);
+    addSchedule(schedule2);
+
+    if (saveSchedules("schedules.json")) {
+        qDebug() << "저장 성공";
+    }
+    else {
+        qDebug() << "저장 실패";
+    }
 }
