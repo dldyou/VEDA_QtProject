@@ -1,7 +1,7 @@
 #import "template.typ": *
 #import "utils.typ": *
 
-#show: project.with(title: title, authors: authors,)
+#show: project.with(title: title, authors: authors)
 
 = 시스템 구성
 == UI 구성 및 기능
@@ -11,15 +11,15 @@
 `schedule.json` 파일은 일정 데이터를 저장하는 JSON 형식의 파일입니다. 각 일정 항목은 다음과 같은 구조를 가집니다:
 
 #prompt([
-```json
-{
-  "id": "unique-identifier",
-  "title": "일정 제목",
-  "description": "일정 설명",
-  "start_time": "2026-04-20T09:00:00",
-  "end_time": "2026-04-22T17:00:00",
-}
-```
+  ```json
+  {
+    "id": "unique-identifier",
+    "title": "일정 제목",
+    "description": "일정 설명",
+    "start_time": "2026-04-20T09:00:00",
+    "end_time": "2026-04-22T17:00:00",
+  }
+  ```
 ])
 
 
@@ -33,7 +33,7 @@
   - `camelCase`로 작성합니다.
 === 클래스
 - `PascalCase`로 작성합니다.
-===  함수
+=== 함수
 - `camelCase`로 작성합니다.
 === 파일 및 디렉토리
 - `snake_case`로 작성합니다.
@@ -51,7 +51,7 @@
   }
   ```
 ])
-- *연산자 사이*에는 *공백을 추가*하여 가독성을 높입니다. 
+- *연산자 사이*에는 *공백을 추가*하여 가독성을 높입니다.
 #prompt([
   ```c++
   a+b+c+d // bad
@@ -93,4 +93,4 @@
 - `04.20`: UI 설계 및 기본 CRUD 기능 구현
 - `04.21`: 데이터 파일 입출력 연결
 - `04.22`: 프로젝트 완성 및 최종 점검
-== GitHub 
+== GitHub
