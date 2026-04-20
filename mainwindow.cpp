@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->twScheduleList->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
 
     selectedDate = QDate::currentDate();
-    ui->lblSelectedDate->setText(selectedDate.toString("yyyy-MM-dd"));
+    ui->lblSelectedDate->setText(selectedDate.toString(timeFormat));
     updateTable();
 }
 
@@ -53,12 +53,14 @@ MainWindow::~MainWindow() {
 
 void MainWindow::on_cwCalender_selectionChanged() {
     selectedDate = ui->cwCalender->selectedDate();
-    ui->lblSelectedDate->setText(selectedDate.toString("yyyy-MM-dd"));
+    ui->lblSelectedDate->setText(selectedDate.toString(timeFormat));
     updateTable();
 }
 
-void MainWindow::updateTable() {
+void MainWindow::updateTable()
+{
     ui->twScheduleList->setRowCount(0);
+
 
     QString searchText = ui->leSearch->text();
 
@@ -69,17 +71,22 @@ void MainWindow::updateTable() {
         currentViewList = scheduleManager->getSchedulesByContainText(searchText);
     }
 
-    // 테이블에 뿌리기
+    // 테이블 출력
     for (int i = 0; i < currentViewList.size(); i++) {
         const Schedule &schedule = currentViewList[i];
 
         ui->twScheduleList->insertRow(i);
-        ui->twScheduleList->setItem(i, 0, new QTableWidgetItem(schedule.getTitle()));
-        ui->twScheduleList->setItem(i, 1, new QTableWidgetItem(schedule.getStartTime().toString("yyyy-MM-dd")));
-        ui->twScheduleList->setItem(i, 2, new QTableWidgetItem(schedule.getEndTime().toString("yyyy-MM-dd")));
+
+        ui->twScheduleList->setItem(i, 0,
+                                    new QTableWidgetItem(schedule.getTitle()));
+
+        ui->twScheduleList->setItem(i, 1,
+                                    new QTableWidgetItem(schedule.getStartTime().toString(timeFormat)));
+
+        ui->twScheduleList->setItem(i, 2,
+                                    new QTableWidgetItem(schedule.getEndTime().toString(timeFormat)));
     }
 }
-
 void MainWindow::on_btnAdd_clicked() {
     ScheduleEditorDialog dlg(this);
     // 날짜 전달
@@ -138,15 +145,8 @@ void MainWindow::on_btnRemove_clicked() {
         return;
     }
 
-    if (QMessageBox::question(this, "삭제", "정말 삭제하시겠습니까?")
-        != QMessageBox::Yes) {
-        return;
-    }
-
-    // 화면 기준 데이터 사용
     Schedule selected = currentViewList[row];
 
-    // 전체 데이터에서 찾아서 삭제
     QList<Schedule> all = scheduleManager->getSchedules();
 
     for (int i = 0; i < all.size(); i++) {
@@ -157,6 +157,6 @@ void MainWindow::on_btnRemove_clicked() {
             break;
         }
     }
-    // 저장
+
     scheduleManager->saveSchedules();
 }
