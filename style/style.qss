@@ -27,37 +27,76 @@ QTableWidget::item:selected {
     color: #1d4ed8;
 }
 
-/* 캘린더 위젯 스타일 */
+/* --- 캘린더 위젯 스타일 시작 --- */
+
+/* 1. 캘린더 전체 컨테이너 */
 QCalendarWidget {
     background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
 }
 
+/* 2. 상단 네비게이션 바 (월/년 선택 영역) */
 #qt_calendar_navigationbar {
-    background-color: #ffffff;
-    border-bottom: 1px solid #f3f4f6;
+    background-color: #f8fafc; /* 리스트 헤더와 같은 톤으로 일체감 부여 */
+    border-bottom: 1px solid #e2e8f0;
+    min-height: 40px; /* 클릭하기 편하게 높이 조절 */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
+/* 3. 네비게이션 바 내부 버튼들 (이전/다음, 월/년 글자) */
 QCalendarWidget QToolButton {
-    color: #374151;
+    color: #334155;
+    font-weight: bold;
+    font-size: 14px;
     background-color: transparent;
-    icon-size: 20px;
-    margin: 5px;
-}
-
-QCalendarWidget QToolButton:hover {
-    background-color: #f3f4f6;
     border-radius: 6px;
+    margin: 4px;
+    padding: 4px 12px; /* 버튼 클릭 영역 넉넉하게 */
 }
 
+/* 버튼에 마우스 올렸을 때 */
+QCalendarWidget QToolButton:hover {
+    background-color: #e2e8f0;
+}
+
+/* 4. 월/년 클릭 시 나오는 드롭다운 메뉴 스타일 */
+QCalendarWidget QMenu {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 4px;
+}
+QCalendarWidget QMenu::item {
+    padding: 6px 20px;
+    border-radius: 4px;
+}
+QCalendarWidget QMenu::item:selected {
+    background-color: #f1f5f9;
+    color: #0f172a;
+}
+
+/* 5. 날짜가 표시되는 내부 달력 표 (가장 중요) */
 QCalendarWidget QTableView {
     background-color: #ffffff;
-    color: #374151;
-    selection-background-color: #2563eb;
-    selection-color: #ffffff;
+    alternate-background-color: #ffffff; /* 줄무늬 배경 제거 */
+    border: none;
+    outline: none; /* 클릭 시 날짜 테두리에 생기는 파란색 점선 차단 */
+    selection-background-color: #3b82f6; /* 선택된 날짜의 동그란(혹은 네모난) 파란색 배경 */
+    selection-color: #ffffff;            /* 선택된 날짜 글자색 */
 }
 
+/* 6. 요일 헤더 (월, 화, 수...) */
+QCalendarWidget QTableView QHeaderView::section {
+    background-color: #ffffff;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    padding: 8px 0px;
+}
+/* --- 캘린더 위젯 스타일 끝 --- */
 /* leSearch 스타일 */
 QLineEdit#leSearch {
     padding: 8px 12px;
