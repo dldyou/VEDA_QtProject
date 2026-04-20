@@ -18,7 +18,7 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QLineEdit" name="lineEditSerach"/>
+       <widget class="QLineEdit" name="leSearch"/>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
@@ -28,7 +28,26 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <widget class="QTableWidget" name="twScheduleList"/>
+           <widget class="QTableWidget" name="twScheduleList">
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>false</bool>
+            </attribute>
+            <column>
+             <property name="text">
+              <string>Title</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Start</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>End</string>
+             </property>
+            </column>
+           </widget>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_6">

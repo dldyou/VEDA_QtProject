@@ -9,13 +9,14 @@
 class ScheduleManager : public QObject {
     Q_OBJECT
 public:
-    ScheduleManager();
+    explicit ScheduleManager(QObject *parent = nullptr);
     // CRUD
     void addSchedule(const Schedule &schedule);
     void updateSchedule(int index, const Schedule &schedule);
     void removeSchedule(int index);
     // getter
     const QList<Schedule>& getSchedules() const { return schedules; }
+    QList<Schedule> getSchedulesForDate(const QDate &date) const;
     // 파일 입출력
     bool saveSchedules(const QString &fileName);
     bool loadSchedules(const QString &fileName);

@@ -8,10 +8,19 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow) {
     ui->setupUi(this);
-    ScheduleManager scheduleManager;
 
-    scheduleManager.setStandardSchedules();
-    scheduleManager.loadSchedules("schedules.json");
+    scheduleManager = new ScheduleManager(this);
+    connect(scheduleManager, &ScheduleManager::schedulesChanged, this, &MainWindow::updateTable);
+
+    scheduleManager->setStandardSchedules();
+    scheduleManager->loadSchedules("schedules.json");
+
+    ui->twScheduleList->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    ui->twScheduleList->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    ui->twScheduleList->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+
+    selectedDate = QDate::currentDate();
+    updateTable();
 }
 
 MainWindow::~MainWindow() {
@@ -20,10 +29,28 @@ MainWindow::~MainWindow() {
 
 void MainWindow::on_cwCalender_selectionChanged() {
     selectedDate = ui->cwCalender->selectedDate();
+    updateTable();
+}
+
+void MainWindow::updateTable() {
+    ui->twScheduleList->setRowCount(0);
+    const QList<Schedule>& schedules = scheduleManager->getSchedulesForDate(selectedDate);
+    QString timeFormat = "yyyy-MM-dd";
+
+    for (int i = 0; i < schedules.size(); i++) {
+        const Schedule &schedule = schedules[i];
+        ui->twScheduleList->insertRow(i);
+
+        qDebug() << schedule.getTitle() << " " << schedule.getStartTime() << " " << schedule.getEndTime();
+
+        ui->twScheduleList->setItem(i, 0, new QTableWidgetItem(schedule.getTitle()));
+        ui->twScheduleList->setItem(i, 1, new QTableWidgetItem(schedule.getStartTime().toString(timeFormat)));
+        ui->twScheduleList->setItem(i, 2, new QTableWidgetItem(schedule.getEndTime().toString(timeFormat)));
+    }
     qDebug() << selectedDate;
 }
-void MainWindow::on_btnAdd_clicked()
-{
+
+void MainWindow::on_btnAdd_clicked() {
     ScheduleEditorDialog dlg(this);
 
     connect(&dlg, &ScheduleEditorDialog::scheduleSaved,
