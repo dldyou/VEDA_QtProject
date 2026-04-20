@@ -23,6 +23,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(VEDA_QtProject
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+
+        scheduleeditordialog.h scheduleeditordialog.cpp scheduleeditordialog.ui
+
+
+
         schedule.h schedule.cpp
         schedulemanager.h schedulemanager.cpp
     )
