@@ -1,33 +1,34 @@
-// #ifndef SCHEDULEEDITORDIALOG_H
-// #define SCHEDULEEDITORDIALOG_H
-// #include "schedule.h"
-// #include <QDialog>
+#ifndef SCHEDULEEDITORDIALOG_H
+#define SCHEDULEEDITORDIALOG_H
+#include "schedule.h"
+#include <QDialog>
 
-// namespace Ui {
-// class ScheduleEditorDialog;
-// }
+namespace Ui {
+class ScheduleEditorDialog;
+}
 
-// class ScheduleEditorDialog : public QDialog
-// {
-//     Q_OBJECT
+class ScheduleEditorDialog : public QDialog
+{
+    Q_OBJECT
 
-// public:
-//     explicit ScheduleEditorDialog(QWidget *parent = nullptr);
+public:
+    explicit ScheduleEditorDialog(QWidget *parent = nullptr);
 
-//     void setDate(const QDate &date);
+    void setDate(const QDate &date);
+    void setSchedule(const Schedule &schedule);
 
-//     ~ScheduleEditorDialog();
+    ~ScheduleEditorDialog();
 
-// private slots:
-//     void on_btnSave_clicked();
+private slots:
+    void on_btnSave_clicked();
 
-//     void on_btnCancel_clicked();
+    void on_btnCancel_clicked();
 
-// signals:
-//     void scheduleSaved(const Schedule &schedule);
+signals:
+    void scheduleSaved(const Schedule &schedule);
 
-// private:
-//     Ui::ScheduleEditorDialog *ui;
-// };
+private:
+    Ui::ScheduleEditorDialog *ui;
+};
 
-// #endif // SCHEDULEEDITORDIALOG_H
+#endif // SCHEDULEEDITORDIALOG_H
