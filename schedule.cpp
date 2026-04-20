@@ -28,10 +28,26 @@ QJsonObject Schedule::toJsonObject() const {
 
 // JSON 객체로부터 데이터 로드
 Schedule Schedule::fromJsonObject(const QJsonObject &obj) {
-    Schedule s;
-    s.title = obj["title"].toString();
-    s.description = obj["description"].toString();
-    s.startTime = QDateTime::fromString(obj["start_time"].toString(), Qt::ISODate);
-    s.endTime = QDateTime::fromString(obj["end_time"].toString(), Qt::ISODate);
-    return s;
+    Schedule schedule;
+    schedule.title = obj["title"].toString();
+    schedule.description = obj["description"].toString();
+    schedule.startTime = QDateTime::fromString(obj["start_time"].toString(), Qt::ISODate);
+    schedule.endTime = QDateTime::fromString(obj["end_time"].toString(), Qt::ISODate);
+    return schedule;
+}
+
+QString Schedule::getTitle() const {
+    return this->title;
+}
+
+QString Schedule::getDescription() const {
+    return this->description;
+}
+
+QDateTime Schedule::getStartTime() const {
+    return this->startTime;
+}
+
+QDateTime Schedule::getEndTime() const {
+    return this->endTime;
 }

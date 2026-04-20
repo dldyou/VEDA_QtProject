@@ -11,6 +11,11 @@ public:
 
     QJsonObject toJsonObject() const;
     static Schedule fromJsonObject(const QJsonObject &obj);
+
+    QString getTitle() const;
+    QString getDescription() const;
+    QDateTime getStartTime() const;
+    QDateTime getEndTime() const;
 private:
     QString title;
     QString description;

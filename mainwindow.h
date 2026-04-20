@@ -2,8 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTableWidget>
+#include <QTableWidgetItem>
 #include <QDate>
 #include <QList>
+
+#include "schedulemanager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,5 +28,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QDate selectedDate;
+    ScheduleManager *scheduleManager;
+
+    void updateTable();
 };
 #endif // MAINWINDOW_H

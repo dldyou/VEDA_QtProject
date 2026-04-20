@@ -1,7 +1,5 @@
 #include "schedulemanager.h"
-
-ScheduleManager::ScheduleManager() {}
-
+ScheduleManager::ScheduleManager(QObject *parent) : QObject(parent) {}
 void ScheduleManager::addSchedule(const Schedule &s) {
     schedules.append(s);
     emit schedulesChanged();
@@ -77,4 +75,16 @@ void ScheduleManager::setStandardSchedules() {
     else {
         qDebug() << "저장 실패";
     }
+
+    schedules.clear();
+}
+
+QList<Schedule> ScheduleManager::getSchedulesForDate(const QDate &date) const {
+    QList<Schedule> filtered;
+    for (const auto &schedule : schedules) {
+        if (schedule.getStartTime().date() <= date && date <= schedule.getEndTime().date()) {
+            filtered.append(schedule);
+        }
+    }
+    return filtered;
 }
