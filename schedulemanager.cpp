@@ -62,3 +62,7 @@ bool ScheduleManager::loadSchedules(const QString &fileName) {
 
     return true;
 }
+
+void ScheduleManager::setStandardSchedules() {
+
+}

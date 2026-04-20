@@ -6,8 +6,7 @@
 #include <QFile>
 #include <QList>
 
-class ScheduleManager
-{
+class ScheduleManager {
 public:
     ScheduleManager();
     // CRUD
@@ -19,6 +18,8 @@ public:
     // 파일 입출력
     bool saveSchedules(const QString &fileName);
     bool loadSchedules(const QString &fileName);
+    // develop factory
+    void setStandardSchedules();
 signals:
     // 데이터가 변할 때마다 이 신호를 발생시켜 UI에 알림
     void schedulesChanged();

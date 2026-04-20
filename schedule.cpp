@@ -9,8 +9,7 @@ Schedule::Schedule(
     QString title,
     QString description,
     QDateTime startTime,
-    QDateTime endTime)
-{
+    QDateTime endTime) {
     this->title = title;
     this->description = description;
     this->startTime = startTime;

@@ -4,8 +4,7 @@
 #include <QDateTime>
 #include <QJsonObject>
 
-class Schedule
-{
+class Schedule {
 public:
     Schedule();
     Schedule(QString, QString, QDateTime, QDateTime);
