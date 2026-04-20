@@ -19,6 +19,23 @@ void ScheduleManager::removeSchedule(int index) {
     }
 }
 
+QList<Schedule> ScheduleManager::getSchedulesByContainText(const QString &text) const {
+    QList<Schedule> filtered;
+
+    // 검색어가 비어있으면 빈 리스트 반환
+    if (text.isEmpty()) {
+        return filtered;
+    }
+
+    for (const auto &schedule : schedules) {
+        if (schedule.getTitle().contains(text, Qt::CaseInsensitive) ||
+            schedule.getDescription().contains(text, Qt::CaseInsensitive)) {
+            filtered.append(schedule);
+        }
+    }
+    return filtered;
+}
+
 bool ScheduleManager::saveSchedules(const QString &fileName) {
     QJsonArray jsonArray;
     for (const auto &schedule : schedules) {

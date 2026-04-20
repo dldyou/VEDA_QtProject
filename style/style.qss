@@ -57,3 +57,17 @@ QCalendarWidget QTableView {
     selection-background-color: #2563eb;
     selection-color: #ffffff;
 }
+
+/* leSearch 스타일 */
+QLineEdit#leSearch {
+    padding: 8px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px; /* 둥근 캡슐 모양 */
+    background-color: #ffffff;
+    selection-background-color: #3b82f6;
+    font-size: 13px;
+}
+
+QLineEdit#leSearch:focus {
+    border: 2px solid #3b82f6; /* 포커스 시 파란색 테두리 */
+}
