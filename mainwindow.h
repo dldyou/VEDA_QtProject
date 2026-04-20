@@ -24,7 +24,7 @@ public:
 private slots:
     void on_cwCalender_selectionChanged();
 
-    void on_btnAdd_clicked();
+    // void on_btnAdd_clicked();
 
     void on_btnEdit_clicked();
 

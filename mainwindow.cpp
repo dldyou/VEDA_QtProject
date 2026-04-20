@@ -4,10 +4,32 @@
 #include "schedulemanager.h"
 #include "scheduleeditordialog.h"
 
+void applyStyleSheet(QWidget* widget, const QString& path) {
+    QFile file(path);
+    if (file.open(QFile::ReadOnly)) {
+        QString styleSheet = QString::fromUtf8(file.readAll());
+        widget->setStyleSheet(styleSheet);
+    }
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow) {
     ui->setupUi(this);
+
+    applyStyleSheet(this, ":/style/style.qss");
+
+    ui->cwCalender->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+
+    QTextCharFormat saturdayFormat;
+    saturdayFormat.setForeground(QColor("#007bff"));
+    saturdayFormat.setFontWeight(QFont::Bold);
+    ui->cwCalender->setWeekdayTextFormat(Qt::Saturday, saturdayFormat);
+
+    QTextCharFormat sundayFormat;
+    sundayFormat.setForeground(QColor("#dc3545"));
+    sundayFormat.setFontWeight(QFont::Bold);
+    ui->cwCalender->setWeekdayTextFormat(Qt::Sunday, sundayFormat);
 
     scheduleManager = new ScheduleManager(this);
     connect(scheduleManager, &ScheduleManager::schedulesChanged, this, &MainWindow::updateTable);
@@ -17,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
         scheduleManager->setStandardSchedules();
     }
 
+    ui->twScheduleList->verticalHeader()->setVisible(false);
     ui->twScheduleList->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     ui->twScheduleList->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     ui->twScheduleList->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
@@ -72,9 +95,7 @@ void MainWindow::on_btnAdd_clicked() {
     dlg.exec();
 }
 
-
-void MainWindow::on_btnEdit_clicked()
-{
+void MainWindow::on_btnEdit_clicked() {
     int row = ui->twScheduleList->currentRow();
     if (row < 0) return;
 
@@ -105,8 +126,8 @@ void MainWindow::on_btnEdit_clicked()
 
     dlg.exec();
 }
-void MainWindow::on_btnRemove_clicked()
-{
+
+void MainWindow::on_btnRemove_clicked() {
     // 현재 선택된 테이블 행 인덱스 가져오기
     int row = ui->twScheduleList->currentRow();
 

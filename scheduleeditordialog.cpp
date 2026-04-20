@@ -7,7 +7,7 @@
 
 ScheduleEditorDialog::ScheduleEditorDialog(QWidget *parent)
     : QDialog(parent)
-    , ui(new Ui::ScheduleEditorDialog){
+    , ui(new Ui::ScheduleEditorDialog) {
     ui->setupUi(this);
 
     QDateTime now = QDateTime::currentDateTime();
@@ -21,12 +21,11 @@ ScheduleEditorDialog::ScheduleEditorDialog(QWidget *parent)
     ui->dateedit2->setTime(now.time().addSecs(3600));
 }
 
-ScheduleEditorDialog::~ScheduleEditorDialog(){
+ScheduleEditorDialog::~ScheduleEditorDialog() {
     delete ui;
 }
 
-void ScheduleEditorDialog::on_btnSave_clicked()
-{
+void ScheduleEditorDialog::on_btnSave_clicked() {
     QString title = ui->lineeditTitle->text();
     QString content = ui->texteditContent->toPlainText();
 
@@ -51,13 +50,12 @@ void ScheduleEditorDialog::on_btnSave_clicked()
     accept();
 }
 
-void ScheduleEditorDialog::setDate(const QDate &date){
+void ScheduleEditorDialog::setDate(const QDate &date) {
     ui->dateedit1->setDate(date);
     ui->dateedit2->setDate(date);
 }
 
-void ScheduleEditorDialog::setSchedule(const Schedule &schedule)
-{
+void ScheduleEditorDialog::setSchedule(const Schedule &schedule) {
     ui->lineeditTitle->setText(schedule.getTitle());
     ui->texteditContent->setText(schedule.getDescription());
 
@@ -65,9 +63,7 @@ void ScheduleEditorDialog::setSchedule(const Schedule &schedule)
     ui->dateedit2->setDateTime(schedule.getEndTime());
 }
 
-void ScheduleEditorDialog::on_btnCancel_clicked(){
-
+void ScheduleEditorDialog::on_btnCancel_clicked() {
     reject();  // 그냥 창 닫기
-
 }
 
