@@ -43,8 +43,9 @@ private:
     Ui::ScheduleCardWidget *ui;
     // 일정 ID를 저장하는 멤버 변수
     QString id;
-    void setCategoryIcon(const QString &category);
 
+    //아이콘 매핑을 위한 설정
+    void setCategoryIcon(const QString &category);
     static QMap<QString, QString> iconMap;
 };
 

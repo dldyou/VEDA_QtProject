@@ -63,6 +63,7 @@ void ScheduleCardWidget::leaveEvent(QEvent *event) {
     QWidget::leaveEvent(event);
 }
 
+// 아이콘 매핑
 QMap<QString, QString> ScheduleCardWidget::iconMap = {
     {"운동", ":/icons/exercise.svg"},
     {"공부", ":/icons/study.svg"},
@@ -71,6 +72,7 @@ QMap<QString, QString> ScheduleCardWidget::iconMap = {
     {"취미", ":/icons/hobby.svg"}
 };
 
+//아이콘 세팅
 void ScheduleCardWidget::setCategoryIcon(const QString &category)
 {
     QString path = iconMap.value(category, ":/icons/default.svg");
