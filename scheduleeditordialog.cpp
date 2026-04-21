@@ -11,6 +11,9 @@ ScheduleEditorDialog::ScheduleEditorDialog(QWidget *parent)
 
     QDateTime now = QDateTime::currentDateTime();
 
+    //기본 인덱스 값
+    ui->cbCategory->setCurrentIndex(-1);
+
     // 기본값 현재 날짜
     ui->deStart->setDate(now.date());
     ui->deEnd->setDate(now.date());
@@ -28,7 +31,9 @@ void ScheduleEditorDialog::on_btnSave_clicked() {
     QString title = ui->leTitle->text();
     QString content = ui->teContent->toPlainText();
 
-    // date, time 가져옴
+    QString category = ui->cbCategory->currentText();     // 콤보박스
+    QString categoryDetail = ui->leCategoryDetail->text(); // 옆 lineEdit
+
     QDateTime startDateTime = ui->deStart->dateTime();
     QDateTime endDateTime = ui->deEnd->dateTime();
 
@@ -37,13 +42,18 @@ void ScheduleEditorDialog::on_btnSave_clicked() {
         return;
     }
 
-    // 시간 역전 방지
+    if (ui->cbCategory->currentIndex() < 0) {
+        QMessageBox::warning(this, "경고", "카테고리를 선택해주세요.");
+        return;
+    }
+
     if (startDateTime > endDateTime) {
         QMessageBox::warning(this, "경고", "종료 시간이 시작 시간보다 빠릅니다.");
         return;
     }
 
-    Schedule schedule(title, content, startDateTime, endDateTime);
+    Schedule schedule(title, content, startDateTime, endDateTime,
+                      category, categoryDetail);
 
     emit scheduleSaved(schedule);
     accept();
@@ -60,8 +70,10 @@ void ScheduleEditorDialog::setSchedule(const Schedule &schedule) {
 
     ui->deStart->setDateTime(schedule.getStartTime());
     ui->deEnd->setDateTime(schedule.getEndTime());
-}
 
+    ui->cbCategory->setCurrentText(schedule.getCategory());
+    ui->leCategoryDetail->setText(schedule.getCategoryDetail());
+}
 void ScheduleEditorDialog::on_btnCancel_clicked() {
     reject();  // 그냥 창 닫기
 }
