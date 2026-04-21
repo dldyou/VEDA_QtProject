@@ -32,6 +32,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         schedulemanager.h schedulemanager.cpp
         style/style.qss
         resources.qrc
+        schedulecardwidget.h schedulecardwidget.cpp schedulecardwidget.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET VEDA_QtProject APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

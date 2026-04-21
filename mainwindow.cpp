@@ -3,6 +3,7 @@
 
 #include "schedulemanager.h"
 #include "scheduleeditordialog.h"
+#include "schedulecardwidget.h"
 
 void applyStyleSheet(QWidget* widget, const QString& path) {
     QFile file(path);
@@ -34,13 +35,12 @@ MainWindow::MainWindow(QWidget *parent)
     scheduleManager = new ScheduleManager(this);
     connect(scheduleManager, &ScheduleManager::schedulesChanged, this, &MainWindow::updateTable);
     connect(ui->leSearch, &QLineEdit::textChanged, this, &MainWindow::updateTable);
+    connect(ui->lwScheduleList, &QListWidget::itemSelectionChanged, this, &MainWindow::on_lwScheduleList_itemSelectionChanged);
 
     scheduleManager->loadSchedules();
 
-    ui->twScheduleList->verticalHeader()->setVisible(false);
-    ui->twScheduleList->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
-    ui->twScheduleList->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-    ui->twScheduleList->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+    ui->lwScheduleList->setSpacing(4);
+    ui->lwScheduleList->setFocusPolicy(Qt::NoFocus);
 
     selectedDate = QDate::currentDate();
     ui->lblSelectedDate->setText(selectedDate.toString(timeFormat));
@@ -62,7 +62,7 @@ void MainWindow::updateTable()
 {
     QString searchText = ui->leSearch->text();
 
-    ui->twScheduleList->setRowCount(0);
+    ui->lwScheduleList->clear();
 
     // 화면 데이터 결정
     if (searchText.isEmpty()) {
@@ -76,10 +76,13 @@ void MainWindow::updateTable()
     for (int i = 0; i < currentViewList.size(); i++) {
         const Schedule &schedule = currentViewList[i];
 
-        ui->twScheduleList->insertRow(i);
-        ui->twScheduleList->setItem(i, 0, new QTableWidgetItem(schedule.getTitle()));
-        ui->twScheduleList->setItem(i, 1, new QTableWidgetItem(schedule.getStartTime().toString(timeFormat)));
-        ui->twScheduleList->setItem(i, 2, new QTableWidgetItem(schedule.getEndTime().toString(timeFormat)));
+        QListWidgetItem *item = new QListWidgetItem(ui->lwScheduleList);
+        ScheduleCardWidget *card = new ScheduleCardWidget(schedule);
+
+        item->setSizeHint(card->sizeHint());
+
+        ui->lwScheduleList->addItem(item);
+        ui->lwScheduleList->setItemWidget(item, card);
     }
 }
 void MainWindow::on_btnAdd_clicked() {
@@ -101,7 +104,53 @@ void MainWindow::on_btnAdd_clicked() {
 }
 
 void MainWindow::on_btnEdit_clicked() {
-    int row = ui->twScheduleList->currentRow();
+
+}
+
+void MainWindow::on_btnRemove_clicked() {
+    int row = ui->lwScheduleList->currentRow();
+    if (row < 0) {
+        QMessageBox::warning(this, "오류", "삭제할 항목을 선택해주세요.");
+        return;
+    }
+
+    QMessageBox::StandardButton reply =
+        QMessageBox::question(this, "삭제 확인", "정말 삭제하시겠습니까?", QMessageBox::Yes | QMessageBox::No);
+
+    if (reply != QMessageBox::Yes) {
+        return;
+    }
+
+    Schedule selected = currentViewList[row];
+
+    QList<Schedule> all = scheduleManager->getSchedules();
+
+    for (int i = 0; i < all.size(); i++) {
+        if (all[i].getStartTime() == selected.getStartTime() &&
+            all[i].getTitle() == selected.getTitle()) {
+
+            scheduleManager->removeSchedule(i);
+            break;
+        }
+    }
+
+    scheduleManager->saveSchedules();
+}
+void MainWindow::on_lwScheduleList_itemSelectionChanged() {
+    for (int i = 0; i < ui->lwScheduleList->count(); ++i) {
+        QListWidgetItem *item = ui->lwScheduleList->item(i);
+        ScheduleCardWidget *card = qobject_cast<ScheduleCardWidget*>(ui->lwScheduleList->itemWidget(item));
+
+        if (card) {
+            card->setCardSelected(item->isSelected());
+        }
+    }
+}
+
+
+void MainWindow::on_lwScheduleList_itemDoubleClicked(QListWidgetItem *item)
+{
+    int row = ui->lwScheduleList->currentRow();
     if (row < 0) {
         QMessageBox::warning(this, "오류", "수정할 항목을 선택해주세요.");
         return;
@@ -133,32 +182,3 @@ void MainWindow::on_btnEdit_clicked() {
     dlg.exec();
 }
 
-void MainWindow::on_btnRemove_clicked() {
-    int row = ui->twScheduleList->currentRow();
-    if (row < 0) {
-        QMessageBox::warning(this, "오류", "삭제할 항목을 선택해주세요.");
-        return;
-    }
-
-    QMessageBox::StandardButton reply =
-        QMessageBox::question(this, "삭제 확인", "정말 삭제하시겠습니까?", QMessageBox::Yes | QMessageBox::No);
-
-    if (reply != QMessageBox::Yes) {
-        return;
-    }
-
-    Schedule selected = currentViewList[row];
-
-    QList<Schedule> all = scheduleManager->getSchedules();
-
-    for (int i = 0; i < all.size(); i++) {
-        if (all[i].getStartTime() == selected.getStartTime() &&
-            all[i].getTitle() == selected.getTitle()) {
-
-            scheduleManager->removeSchedule(i);
-            break;
-        }
-    }
-
-    scheduleManager->saveSchedules();
-}

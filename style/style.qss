@@ -3,16 +3,6 @@ QMainWindow {
     background-color: #f8fafc;
 }
 
-/* 테이블 위젯 스타일 */
-QTableWidget {
-    background-color: #ffffff;
-    color: #1f2937;
-    gridline-color: #f3f4f6;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    outline: none;
-}
-
 QHeaderView::section {
     background-color: #f9fafb;
     color: #4b5563;
@@ -22,91 +12,127 @@ QHeaderView::section {
     font-weight: bold;
 }
 
-QTableWidget::item:selected {
-    background-color: #eff6ff;
-    color: #1d4ed8;
-}
-
 /* --- 캘린더 위젯 스타일 시작 --- */
-
-/* 1. 캘린더 전체 컨테이너 */
+/* 1. 캘린더 전체 외곽 (카드와 동일한 곡률 적용) */
+/* 1. 전체 컨테이너: 카드 UI와 동일한 곡률 */
 QCalendarWidget {
     background-color: #ffffff;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
 }
 
-/* 2. 상단 네비게이션 바 (월/년 선택 영역) */
+/* 2. 상단 네비게이션 바: 배경색과 테두리 제거 */
 #qt_calendar_navigationbar {
-    background-color: #f8fafc; /* 리스트 헤더와 같은 톤으로 일체감 부여 */
-    border-bottom: 1px solid #e2e8f0;
-    min-height: 40px; /* 클릭하기 편하게 높이 조절 */
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
 }
 
-/* 3. 네비게이션 바 내부 버튼들 (이전/다음, 월/년 글자) */
+/* 3. 월/년도 선택 버튼 및 이동 화살표 */
 QCalendarWidget QToolButton {
-    color: #334155;
-    font-weight: bold;
-    font-size: 14px;
     background-color: transparent;
     border-radius: 6px;
+    color: #1e293b;
+    font-weight: bold;
+    icon-size: 20px; /* 화살표 크기 */
     margin: 4px;
-    padding: 4px 12px; /* 버튼 클릭 영역 넉넉하게 */
 }
-
-/* 버튼에 마우스 올렸을 때 */
 QCalendarWidget QToolButton:hover {
-    background-color: #e2e8f0;
-}
-
-/* 4. 월/년 클릭 시 나오는 드롭다운 메뉴 스타일 */
-QCalendarWidget QMenu {
-    background-color: #ffffff;
-    border: 1px solid #cbd5e1;
-    border-radius: 4px;
-    padding: 4px;
-}
-QCalendarWidget QMenu::item {
-    padding: 6px 20px;
-    border-radius: 4px;
-}
-QCalendarWidget QMenu::item:selected {
     background-color: #f1f5f9;
-    color: #0f172a;
 }
 
-/* 5. 날짜가 표시되는 내부 달력 표 (가장 중요) */
+/* 4. 년도 입력 스핀박스 (가장 구려 보이는 부분) */
+QCalendarWidget QSpinBox {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    margin-right: 5px;
+    selection-background-color: #3b82f6;
+}
+
+/* 5. 날짜 테이블 영역 (그리드 제거 및 선택 효과) */
 QCalendarWidget QTableView {
     background-color: #ffffff;
-    alternate-background-color: #ffffff; /* 줄무늬 배경 제거 */
+    alternate-background-color: #ffffff;
     border: none;
-    outline: none; /* 클릭 시 날짜 테두리에 생기는 파란색 점선 차단 */
-    selection-background-color: #3b82f6; /* 선택된 날짜의 동그란(혹은 네모난) 파란색 배경 */
-    selection-color: #ffffff;            /* 선택된 날짜 글자색 */
+    outline: none;
 }
 
-/* 6. 요일 헤더 (월, 화, 수...) */
-QCalendarWidget QTableView QHeaderView::section {
+/* 선택된 날짜: 부드러운 사각형 강조 */
+QCalendarWidget QTableView:item:selected {
+    background-color: #3b82f6;
+    color: #ffffff;
+    border-radius: 8px; /* 선택 영역도 둥글게 */
+}
+
+/* 6. 요일 헤더 (S M T W T F S) */
+QCalendarWidget QHeaderView::section {
     background-color: #ffffff;
-    color: #64748b;
-    font-size: 12px;
-    font-weight: bold;
+    color: #94a3b8;
+    padding: 8px 0;
+    font-size: 11px;
     border: none;
-    padding: 8px 0px;
 }
 /* --- 캘린더 위젯 스타일 끝 --- */
 /* leSearch 스타일 */
 QLineEdit#leSearch {
-    padding: 8px 12px;
-    border: 1px solid #e5e7eb;
-    border-radius: 20px; /* 둥근 캡슐 모양 */
     background-color: #ffffff;
-    selection-background-color: #3b82f6;
-    font-size: 13px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #1e293b;
 }
 
 QLineEdit#leSearch:focus {
-    border: 2px solid #3b82f6; /* 포커스 시 파란색 테두리 */
+    border: 2px solid #3b82f6;
+}
+
+/* 리스트 위젯 전체 배경 (카드들을 담는 판) */
+QListWidget {
+    background-color: #f8fafc; /* 아주 연한 회색 */
+    border: none;
+    outline: none; /* 포커스 점선 제거 */
+}
+
+
+QListWidget::item {
+    background-color: transparent; /* 투명하게 */
+}
+
+QListWidget {
+    background-color: #f8fafc;
+    border: none;
+    outline: none;
+}
+
+
+QListWidget::item { background-color: transparent; border: none; }
+QListWidget::item:hover { background-color: transparent; border: none; }
+QListWidget::item:selected { background-color: transparent; border: none; }
+
+ScheduleCardWidget {
+    background-color: #ffffff;
+    border: 1px solid #f1f5f9;
+    border-radius: 12px;
+    padding: 8px;
+}
+
+ScheduleCardWidget:hover {
+    background-color: #fdfdfe;
+    border: 1px solid #cbd5e1;
+}
+
+ScheduleCardWidget[selected="true"] {
+    background-color: #eff6ff;
+    border: 2px solid #3b82f6;
+}
+
+ScheduleCardWidget QLabel#lblTitle {
+    color: #1e293b;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+ScheduleCardWidget QLabel#lblDesc {
+    color: #64748b;
 }
