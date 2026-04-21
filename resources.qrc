@@ -5,5 +5,11 @@
     <qresource prefix="/">
         <file>icons/grayDropDown.svg</file>
         <file>icons/windowicon.svg</file>
+        <file>icons/exercise.svg</file>
+        <file>icons/hobby.svg</file>
+        <file>icons/promise.svg</file>
+        <file>icons/work.svg</file>
+        <file>icons/study.svg</file>
+        <file>icons/default.svg</file>
     </qresource>
 </RCC>
