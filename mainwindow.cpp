@@ -103,10 +103,6 @@ void MainWindow::on_btnAdd_clicked() {
     dlg.exec();
 }
 
-void MainWindow::on_btnEdit_clicked() {
-
-}
-
 void MainWindow::on_btnRemove_clicked() {
     int row = ui->lwScheduleList->currentRow();
     if (row < 0) {
