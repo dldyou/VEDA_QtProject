@@ -1,27 +1,19 @@
 #include "schedulemanager.h"
+#include <algorithm>
+
 ScheduleManager::ScheduleManager(QObject *parent) : QObject(parent) {}
-void ScheduleManager::addSchedule(const Schedule &s) {
-    schedules.append(s);
+void ScheduleManager::addSchedule(const Schedule &schedule) {
+    schedules.insert(schedule.getId(), schedule);
     emit schedulesChanged();
 }
 
 void ScheduleManager::updateSchedule(QString id, const Schedule &schedule) {
-    for (int i = 0; i < schedules.size(); i++) {
-        if (schedules[i].getId() == id) {
-            schedules[i] = schedule;
-            break;
-        }
-    }
+    schedules[schedule.getId()] = schedule;
     emit schedulesChanged();
 }
 
 void ScheduleManager::removeSchedule(QString id) {
-    for (int i = 0; i < schedules.size(); i++) {
-        if (schedules[i].getId() == id) {
-            schedules.removeAt(i);
-            break;
-        }
-    }
+    schedules.remove(id);
     emit schedulesChanged();
 }
 
@@ -90,11 +82,23 @@ bool ScheduleManager::loadSchedules(const QString &fileName) {
 
     QJsonArray jsonArray = doc.array();
     for (const auto &value : jsonArray) {
-        schedules.append(Schedule::fromJsonObject(value.toObject()));
+        Schedule schedule = Schedule::fromJsonObject(value.toObject());
+        schedules.insert(schedule.getId(), schedule);
         qDebug() << value;
     }
 
     return true;
+}
+
+QList<Schedule> ScheduleManager::getSortedSchedules() const {
+    QList<Schedule> ret = schedules.values();
+    std::sort(ret.begin(), ret.end(), [](const Schedule& a, const Schedule& b) {
+        if (a.getStartTime() == b.getStartTime()) {
+            return a.getEndTime() < b.getEndTime();
+        }
+        return a.getStartTime() < a.getStartTime();
+    });
+    return ret;
 }
 
 QList<Schedule> ScheduleManager::getSchedulesForDate(const QDate &date) const {

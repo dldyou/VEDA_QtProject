@@ -15,8 +15,8 @@ public:
     void updateSchedule(QString id, const Schedule &schedule);
     void removeSchedule(QString id);
     QList<Schedule> getSchedulesByContainText(const QString &text) const;
-    // getter
-    const QList<Schedule>& getSchedules() const { return schedules; }
+
+    QList<Schedule> getSortedSchedules() const;
     QList<Schedule> getSchedulesForDate(const QDate &date) const;
     // 파일 입출력
     bool saveSchedules(const QString &fileName = "schedules.json");
@@ -25,7 +25,7 @@ signals:
     // 데이터가 변할 때마다 이 신호를 발생시켜 UI에 알림
     void schedulesChanged();
 private:
-    QList<Schedule> schedules;
+    QHash<QString, Schedule> schedules;
 };
 
 #endif // SCHEDULEMANAGER_H
