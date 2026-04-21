@@ -122,9 +122,7 @@ void MainWindow::on_btnRemove_clicked() {
     QList<Schedule> all = scheduleManager->getSchedules();
 
     for (int i = 0; i < all.size(); i++) {
-        if (all[i].getStartTime() == selected.getStartTime() &&
-            all[i].getTitle() == selected.getTitle()) {
-
+        if (all[i].getId() == selected.getId()) {
             scheduleManager->removeSchedule(i);
             break;
         }
@@ -164,9 +162,7 @@ void MainWindow::on_lwScheduleList_itemDoubleClicked(QListWidgetItem *item)
                 QList<Schedule> all = scheduleManager->getSchedules();
 
                 for (int i = 0; i < all.size(); i++) {
-                    if (all[i].getStartTime() == selected.getStartTime() &&
-                        all[i].getTitle() == selected.getTitle()) {
-
+                    if (all[i].getId() == selected.getId()) {
                         scheduleManager->updateSchedule(i, s);
                         break;
                     }
