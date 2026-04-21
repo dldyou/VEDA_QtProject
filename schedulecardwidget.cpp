@@ -24,7 +24,15 @@ ScheduleCardWidget::ScheduleCardWidget(const Schedule &schedule, QWidget *parent
     shadow->setOffset(0, 4);
 
     this->setAttribute(Qt::WA_StyledBackground, true);
+    this->setAttribute(Qt::WA_Hover, true);
     this->setProperty("selected", false);
+
+    id = schedule.getId();
+    ui->btnDelete->hide();
+    ui->btnDelete->setCursor(Qt::PointingHandCursor);
+    connect(ui->btnDelete, &QPushButton::clicked, this, [this]() {
+        emit deleteRequested(id);
+    });
 }
 
 ScheduleCardWidget::~ScheduleCardWidget()
@@ -40,4 +48,16 @@ void ScheduleCardWidget::setCardSelected(bool isSelected) {
     this->style()->unpolish(this);
     this->style()->polish(this);
     this->update();
+}
+
+// 마우스가 카드 안으로 들어올 때
+void ScheduleCardWidget::enterEvent(QEnterEvent *event) {
+    ui->btnDelete->show(); // 버튼 나타남
+    QWidget::enterEvent(event);
+}
+
+// 마우스가 카드 밖으로 나갈 때
+void ScheduleCardWidget::leaveEvent(QEvent *event) {
+    ui->btnDelete->hide(); // 버튼 숨김
+    QWidget::leaveEvent(event);
 }

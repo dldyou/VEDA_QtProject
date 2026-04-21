@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QStyle>
+#include <QEnterEvent>
 #include "schedule.h"
 
 namespace Ui {
@@ -19,8 +20,16 @@ public:
 
     void setCardSelected(bool isSelected);
 
+signals:
+    void deleteRequested(QString id);
+
+protected:
+    void enterEvent(QEnterEvent *event) override;
+    void leaveEvent(QEvent *event) override;
+
 private:
     Ui::ScheduleCardWidget *ui;
+    QString id;
 };
 
 #endif // SCHEDULECARDWIDGET_H

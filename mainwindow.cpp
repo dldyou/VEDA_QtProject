@@ -20,6 +20,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     applyStyleSheet(this, ":/style/style/style.qss");
 
+    btnAdd = new QPushButton("+", this);
+    btnAdd->setObjectName("btnAdd");
+    btnAdd->setCursor(Qt::PointingHandCursor);
+
+    connect(btnAdd, &QPushButton::clicked, this, &MainWindow::on_btnAdd_clicked);
+
     ui->cwCalender->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
 
     QTextCharFormat saturdayFormat;
@@ -33,8 +39,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->cwCalender->setWeekdayTextFormat(Qt::Sunday, sundayFormat);
 
     scheduleManager = new ScheduleManager(this);
-    connect(scheduleManager, &ScheduleManager::schedulesChanged, this, &MainWindow::updateTable);
-    connect(ui->leSearch, &QLineEdit::textChanged, this, &MainWindow::updateTable);
+    connect(scheduleManager, &ScheduleManager::schedulesChanged, this, &MainWindow::updateList);
+    connect(ui->leSearch, &QLineEdit::textChanged, this, &MainWindow::updateList);
     connect(ui->lwScheduleList, &QListWidget::itemSelectionChanged, this, &MainWindow::on_lwScheduleList_itemSelectionChanged);
 
     scheduleManager->loadSchedules();
@@ -44,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     selectedDate = QDate::currentDate();
     ui->lblSelectedDate->setText(selectedDate.toString(timeFormat));
-    updateTable();
+    updateList();
 }
 
 MainWindow::~MainWindow() {
@@ -55,10 +61,10 @@ void MainWindow::on_cwCalender_selectionChanged() {
     selectedDate = ui->cwCalender->selectedDate();
     ui->lblSelectedDate->setText(selectedDate.toString(timeFormat));
     ui->leSearch->clear();
-    updateTable();
+    updateList();
 }
 
-void MainWindow::updateTable()
+void MainWindow::updateList()
 {
     QString searchText = ui->leSearch->text();
 
@@ -81,10 +87,13 @@ void MainWindow::updateTable()
 
         item->setSizeHint(card->sizeHint());
 
+        connect(card, &ScheduleCardWidget::deleteRequested, this, &MainWindow::on_Schedule_DeleteRequested);
+
         ui->lwScheduleList->addItem(item);
         ui->lwScheduleList->setItemWidget(item, card);
     }
 }
+
 void MainWindow::on_btnAdd_clicked() {
     ScheduleEditorDialog dlg(this);
     // 날짜 전달
@@ -103,33 +112,16 @@ void MainWindow::on_btnAdd_clicked() {
     dlg.exec();
 }
 
-void MainWindow::on_btnRemove_clicked() {
-    int row = ui->lwScheduleList->currentRow();
-    if (row < 0) {
-        QMessageBox::warning(this, "오류", "삭제할 항목을 선택해주세요.");
-        return;
-    }
-
+void MainWindow::on_Schedule_DeleteRequested(QString id) {
     QMessageBox::StandardButton reply =
         QMessageBox::question(this, "삭제 확인", "정말 삭제하시겠습니까?", QMessageBox::Yes | QMessageBox::No);
 
-    if (reply != QMessageBox::Yes) {
-        return;
+    if (reply == QMessageBox::Yes) {
+        scheduleManager->removeSchedule(id);
+        scheduleManager->saveSchedules();
     }
-
-    Schedule selected = currentViewList[row];
-
-    QList<Schedule> all = scheduleManager->getSchedules();
-
-    for (int i = 0; i < all.size(); i++) {
-        if (all[i].getId() == selected.getId()) {
-            scheduleManager->removeSchedule(i);
-            break;
-        }
-    }
-
-    scheduleManager->saveSchedules();
 }
+
 void MainWindow::on_lwScheduleList_itemSelectionChanged() {
     for (int i = 0; i < ui->lwScheduleList->count(); ++i) {
         QListWidgetItem *item = ui->lwScheduleList->item(i);
@@ -157,20 +149,26 @@ void MainWindow::on_lwScheduleList_itemDoubleClicked(QListWidgetItem *item)
 
     connect(&dlg, &ScheduleEditorDialog::scheduleSaved,
             this, [this, selected](const Schedule &s) {
-
-                // 기존 데이터 찾아서 수정
-                QList<Schedule> all = scheduleManager->getSchedules();
-
-                for (int i = 0; i < all.size(); i++) {
-                    if (all[i].getId() == selected.getId()) {
-                        scheduleManager->updateSchedule(i, s);
-                        break;
-                    }
-                }
-
+                scheduleManager->updateSchedule(selected.getId(), s);
                 scheduleManager->saveSchedules();
             });
 
     dlg.exec();
 }
 
+void MainWindow::resizeEvent(QResizeEvent *event) {
+    QMainWindow::resizeEvent(event);
+
+    if (btnAdd) {
+        int paddingRight = 30;
+        int paddingBottom = 30;
+        int btnWidth = 60;
+        int btnHeight = 60;
+
+        btnAdd->setGeometry(this->width() - btnWidth - paddingRight,
+                            this->height() - btnHeight - paddingBottom,
+                            btnWidth, btnHeight);
+
+        btnAdd->raise();
+    }
+}
