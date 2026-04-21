@@ -2,7 +2,7 @@
 
 Schedule::Schedule()
 {
-
+    this->id = QUuid::createUuid().toString();
 }
 
 Schedule::Schedule(
@@ -14,6 +14,7 @@ Schedule::Schedule(
     this->description = description;
     this->startTime = startTime;
     this->endTime = endTime;
+    this->id = QUuid::createUuid().toString();
 }
 
 // JSON 객체로 변환
@@ -34,6 +35,10 @@ Schedule Schedule::fromJsonObject(const QJsonObject &obj) {
     schedule.startTime = QDateTime::fromString(obj["start_time"].toString(), Qt::ISODate);
     schedule.endTime = QDateTime::fromString(obj["end_time"].toString(), Qt::ISODate);
     return schedule;
+}
+
+QString Schedule::getId() const {
+    return this->id;
 }
 
 QString Schedule::getTitle() const {
