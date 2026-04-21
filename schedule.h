@@ -23,7 +23,8 @@ public:
     QString getCategory() const;
     QString getCategoryDetail() const;
 
-    void setId(const QString& id);
+    void setId(const QString &id);
+    void setData(const Schedule &schedule);
 private:
     QString id;
     QString title;

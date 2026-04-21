@@ -68,3 +68,12 @@ QString Schedule::getCategory() const {
 QString Schedule::getCategoryDetail() const {
     return categoryDetail;
 }
+
+void Schedule::setData(const Schedule &schedule) {
+    this->title = schedule.getTitle();
+    this->description = schedule.getDescription();
+    this->startTime = schedule.getStartTime();
+    this->endTime = schedule.getEndTime();
+    this->category = schedule.getCategory();
+    this->categoryDetail = schedule.getCategoryDetail();
+}

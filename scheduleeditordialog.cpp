@@ -52,9 +52,10 @@ void ScheduleEditorDialog::on_btnSave_clicked() {
         return;
     }
 
-    Schedule schedule(title, content, startDateTime, endDateTime,
-                      category, categoryDetail);
 
+    Schedule scheduleData(title, content, startDateTime, endDateTime,
+                      category, categoryDetail);
+    schedule.setData(scheduleData);
     emit scheduleSaved(schedule);
     accept();
 }
@@ -65,6 +66,7 @@ void ScheduleEditorDialog::setDate(const QDate &date) {
 }
 
 void ScheduleEditorDialog::setSchedule(const Schedule &schedule) {
+    this->schedule = schedule;
     ui->leTitle->setText(schedule.getTitle());
     ui->teContent->setText(schedule.getDescription());
 

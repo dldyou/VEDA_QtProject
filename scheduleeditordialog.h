@@ -29,6 +29,7 @@ signals:
 
 private:
     Ui::ScheduleEditorDialog *ui;
+    Schedule schedule;
 };
 
 #endif // SCHEDULEEDITORDIALOG_H
