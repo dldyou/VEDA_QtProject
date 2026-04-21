@@ -12,8 +12,8 @@ public:
     explicit ScheduleManager(QObject *parent = nullptr);
     // CRUD
     void addSchedule(const Schedule &schedule);
-    void updateSchedule(int index, const Schedule &schedule);
-    void removeSchedule(int index);
+    void updateSchedule(QString id, const Schedule &schedule);
+    void removeSchedule(QString id);
     QList<Schedule> getSchedulesByContainText(const QString &text) const;
     // getter
     const QList<Schedule>& getSchedules() const { return schedules; }

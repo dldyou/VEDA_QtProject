@@ -5,18 +5,24 @@ void ScheduleManager::addSchedule(const Schedule &s) {
     emit schedulesChanged();
 }
 
-void ScheduleManager::updateSchedule(int index, const Schedule &s) {
-    if (index >= 0 && index < schedules.size()) {
-        schedules[index] = s;
-        emit schedulesChanged();
+void ScheduleManager::updateSchedule(QString id, const Schedule &schedule) {
+    for (int i = 0; i < schedules.size(); i++) {
+        if (schedules[i].getId() == id) {
+            schedules[i] = schedule;
+            break;
+        }
     }
+    emit schedulesChanged();
 }
 
-void ScheduleManager::removeSchedule(int index) {
-    if (index >= 0 && index < schedules.size()) {
-        schedules.removeAt(index);
-        emit schedulesChanged();
+void ScheduleManager::removeSchedule(QString id) {
+    for (int i = 0; i < schedules.size(); i++) {
+        if (schedules[i].getId() == id) {
+            schedules.removeAt(i);
+            break;
+        }
     }
+    emit schedulesChanged();
 }
 
 QList<Schedule> ScheduleManager::getSchedulesByContainText(const QString &text) const {
