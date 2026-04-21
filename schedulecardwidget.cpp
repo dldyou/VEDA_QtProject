@@ -4,8 +4,7 @@
 
 ScheduleCardWidget::ScheduleCardWidget(const Schedule &schedule, QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::ScheduleCardWidget)
-{
+    , ui(new Ui::ScheduleCardWidget) {
     ui->setupUi(this);
 
     // 데이터 세팅
@@ -35,16 +34,15 @@ ScheduleCardWidget::ScheduleCardWidget(const Schedule &schedule, QWidget *parent
     });
 }
 
-ScheduleCardWidget::~ScheduleCardWidget()
-{
+ScheduleCardWidget::~ScheduleCardWidget() {
     delete ui;
 }
 
 void ScheduleCardWidget::setCardSelected(bool isSelected) {
-    // 1. 위젯의 "selected" 속성값을 변경
+    // 위젯의 "selected" 속성값을 변경
     this->setProperty("selected", isSelected);
 
-    // 2. 변경된 속성을 바탕으로 QSS 스타일을 강제로 다시 계산하여 적용
+    // 변경된 속성을 바탕으로 QSS 스타일을 강제로 다시 계산하여 적용
     this->style()->unpolish(this);
     this->style()->polish(this);
     this->update();
