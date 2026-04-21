@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <QJsonObject>
 #include <QMessageBox>
+#include <QUuid>
 
 class Schedule {
 public:
@@ -13,11 +14,14 @@ public:
     QJsonObject toJsonObject() const;
     static Schedule fromJsonObject(const QJsonObject &obj);
 
+    QString getId() const;
     QString getTitle() const;
     QString getDescription() const;
     QDateTime getStartTime() const;
     QDateTime getEndTime() const;
+    void setId(const QString& id);
 private:
+    QString id;
     QString title;
     QString description;
     QDateTime startTime;
