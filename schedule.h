@@ -9,7 +9,8 @@
 class Schedule {
 public:
     Schedule();
-    Schedule(QString title, QString description, QDateTime startTime, QDateTime endTime);
+    Schedule(QString title, QString description, QDateTime startTime,
+             QDateTime endTime, QString category, QString categoryDetail);
 
     QJsonObject toJsonObject() const;
     static Schedule fromJsonObject(const QJsonObject &obj);
@@ -19,6 +20,9 @@ public:
     QString getDescription() const;
     QDateTime getStartTime() const;
     QDateTime getEndTime() const;
+    QString getCategory() const;
+    QString getCategoryDetail() const;
+
     void setId(const QString& id);
 private:
     QString id;
@@ -26,6 +30,9 @@ private:
     QString description;
     QDateTime startTime;
     QDateTime endTime;
+    // 카테고리 값 추가
+    QString category;
+    QString categoryDetail;
 };
 
 #endif

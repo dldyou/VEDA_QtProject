@@ -5,15 +5,15 @@ Schedule::Schedule()
     this->id = QUuid::createUuid().toString();
 }
 
-Schedule::Schedule(
-    QString title,
-    QString description,
-    QDateTime startTime,
-    QDateTime endTime) {
+Schedule::Schedule(QString title, QString description,
+    QDateTime startTime, QDateTime endTime,
+    QString category, QString categoryDetail) {
     this->title = title;
     this->description = description;
     this->startTime = startTime;
     this->endTime = endTime;
+    this->category = category;
+    this->categoryDetail = categoryDetail;
     this->id = QUuid::createUuid().toString();
 }
 
@@ -24,6 +24,8 @@ QJsonObject Schedule::toJsonObject() const {
     obj["description"] = description;
     obj["start_time"] = startTime.toString(Qt::ISODate);
     obj["end_time"] = endTime.toString(Qt::ISODate);
+    obj["category"] = category;
+    obj["category_detail"] = categoryDetail;
     return obj;
 }
 
@@ -34,6 +36,8 @@ Schedule Schedule::fromJsonObject(const QJsonObject &obj) {
     schedule.description = obj["description"].toString();
     schedule.startTime = QDateTime::fromString(obj["start_time"].toString(), Qt::ISODate);
     schedule.endTime = QDateTime::fromString(obj["end_time"].toString(), Qt::ISODate);
+    schedule.category = obj["category"].toString();
+    schedule.categoryDetail = obj["category_detail"].toString();
     return schedule;
 }
 
@@ -55,4 +59,12 @@ QDateTime Schedule::getStartTime() const {
 
 QDateTime Schedule::getEndTime() const {
     return this->endTime;
+}
+
+QString Schedule::getCategory() const {
+    return category;
+}
+
+QString Schedule::getCategoryDetail() const {
+    return categoryDetail;
 }
