@@ -31,7 +31,7 @@
            <widget class="QLabel" name="lblSelectedDate">
             <property name="font">
              <font>
-              <pointsize>25</pointsize>
+              <pointsize>20</pointsize>
               <italic>false</italic>
               <bold>true</bold>
               <underline>false</underline>
@@ -57,38 +57,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QTableWidget" name="twScheduleList">
-            <property name="editTriggers">
-             <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
-            </property>
-            <property name="selectionMode">
-             <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
-            </property>
-            <property name="selectionBehavior">
-             <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
-            </property>
-            <property name="showGrid">
-             <bool>false</bool>
-            </property>
-            <attribute name="horizontalHeaderStretchLastSection">
-             <bool>false</bool>
-            </attribute>
-            <column>
-             <property name="text">
-              <string>Title</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Start</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>End</string>
-             </property>
-            </column>
-           </widget>
+           <widget class="QListWidget" name="lwScheduleList"/>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_6">

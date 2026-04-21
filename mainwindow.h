@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTableWidget>
 #include <QTableWidgetItem>
+#include <QListWidgetItem>
 #include <QDate>
 #include <QList>
 
@@ -26,9 +27,11 @@ private slots:
 
     void on_btnAdd_clicked();
 
-    void on_btnEdit_clicked();
-
     void on_btnRemove_clicked();
+
+    void on_lwScheduleList_itemSelectionChanged();
+
+    void on_lwScheduleList_itemDoubleClicked(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;
