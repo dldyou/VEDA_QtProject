@@ -52,9 +52,15 @@ void ScheduleEditorDialog::on_btnSave_clicked() {
         return;
     }
 
+    Schedule scheduleData(
+        title, 
+        content, 
+        startDateTime, 
+        endDateTime,  
+        category, 
+        categoryDetail
+    );
 
-    Schedule scheduleData(title, content, startDateTime, endDateTime,
-                      category, categoryDetail);
     schedule.setData(scheduleData);
     emit scheduleSaved(schedule);
     accept();

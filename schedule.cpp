@@ -1,7 +1,6 @@
 #include "schedule.h"
 
-Schedule::Schedule()
-{
+Schedule::Schedule() {
     this->id = QUuid::createUuid().toString();
 }
 

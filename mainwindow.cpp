@@ -165,9 +165,12 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
         int btnWidth = 60;
         int btnHeight = 60;
 
-        btnAdd->setGeometry(this->width() - btnWidth - paddingRight,
-                            this->height() - btnHeight - paddingBottom,
-                            btnWidth, btnHeight);
+        btnAdd->setGeometry(
+            this->width() - btnWidth - paddingRight,
+            this->height() - btnHeight - paddingBottom,
+            btnWidth, 
+            btnHeight
+        );
 
         btnAdd->raise();
     }
