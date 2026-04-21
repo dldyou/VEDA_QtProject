@@ -4,5 +4,6 @@
     </qresource>
     <qresource prefix="/">
         <file>icons/grayDropDown.svg</file>
+        <file>icons/windowicon.svg</file>
     </qresource>
 </RCC>

@@ -114,7 +114,7 @@ void MainWindow::on_btnAdd_clicked() {
 
 void MainWindow::on_Schedule_DeleteRequested(QString id) {
     QMessageBox::StandardButton reply =
-        QMessageBox::question(this, "삭제 확인", "정말 삭제하시겠습니까?", QMessageBox::Yes | QMessageBox::No);
+        QMessageBox::question(this, "삭제", "정말 삭제하시겠습니까?", QMessageBox::Yes | QMessageBox::No);
 
     if (reply == QMessageBox::Yes) {
         scheduleManager->removeSchedule(id);
