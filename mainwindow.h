@@ -67,7 +67,11 @@ private:
     // 일정 시간 표시 형식
     QString timeFormat = "yyyy-MM-dd";
 
+    // 검색 타입을 받기 위한 선언
+    SearchType getSearchType() const;
+
     // 일정 목록을 UI에 업데이트하는 함수
     void updateList();
+
 };
 #endif // MAINWINDOW_H

@@ -17,21 +17,43 @@ void ScheduleManager::removeSchedule(QString id) {
     emit schedulesChanged();
 }
 
-QList<Schedule> ScheduleManager::getSchedulesByContainText(const QString &text) const {
+QList<Schedule> ScheduleManager::getSchedulesByContainText(
+    const QString &text,
+    SearchType type) const
+{
     QList<Schedule> filtered;
 
-    // 검색어가 비어있으면 빈 리스트 반환
-    if (text.isEmpty()) {
-        return filtered;
-    }
+    if (text.isEmpty()) return filtered;
 
     for (const auto &schedule : schedules) {
-        if (schedule.getTitle().contains(text, Qt::CaseInsensitive) ||
-            schedule.getDescription().contains(text, Qt::CaseInsensitive)||
-            schedule.getCategory().contains(text, Qt::CaseInsensitive)) {
-            filtered.append(schedule);
+
+        bool match = false;
+
+        switch (type) {
+        case SearchType::Title:
+            match = schedule.getTitle().contains(text, Qt::CaseInsensitive);
+            break;
+
+        case SearchType::Content:
+            match = schedule.getDescription().contains(text, Qt::CaseInsensitive);
+            break;
+
+        case SearchType::Category:
+            match = schedule.getCategory().contains(text, Qt::CaseInsensitive);
+            break;
+
+        case SearchType::All:
+            match =
+                schedule.getTitle().contains(text, Qt::CaseInsensitive) ||
+                schedule.getDescription().contains(text, Qt::CaseInsensitive) ||
+                schedule.getCategory().contains(text, Qt::CaseInsensitive);
+            break;
         }
+
+        if (match)
+            filtered.append(schedule);
     }
+
     return filtered;
 }
 
