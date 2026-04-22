@@ -50,6 +50,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     selectedDate = QDate::currentDate();
     ui->lblSelectedDate->setText(selectedDate.toString(timeFormat));
+
+    connect(ui->cbSearch, &QComboBox::currentTextChanged, this, [this]() {
+        ui->leSearch->clear();
+        updateList();
+    });
+
     updateList();
 }
 
@@ -75,7 +81,10 @@ void MainWindow::updateList()
         currentViewList = scheduleManager->getSchedulesForDate(selectedDate);
     }
     else {
-        currentViewList = scheduleManager->getSchedulesByContainText(searchText);
+        currentViewList = scheduleManager->getSchedulesByContainText(
+            searchText,
+            getSearchType()
+            );
     }
 
     // 테이블 출력
@@ -174,4 +183,15 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
 
         btnAdd->raise();
     }
+}
+
+SearchType MainWindow::getSearchType() const
+{
+    QString text = ui->cbSearch->currentText();
+
+    if (text == "Title") return SearchType::Title;
+    if (text == "Content") return SearchType::Content;
+    if (text == "Category") return SearchType::Category;
+
+    return SearchType::All;
 }

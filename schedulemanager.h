@@ -16,6 +16,14 @@
  * 
  * - 일정은 고유 ID를 기반으로 관리되며, 일정 목록은 날짜별로 정렬되어 반환됩니다.
  */
+
+enum class SearchType {
+    Title,
+    Content,
+    Category,
+    All
+};
+
 class ScheduleManager : public QObject {
     Q_OBJECT
 public:
@@ -28,7 +36,7 @@ public:
     // 일정 삭제
     void removeSchedule(QString id);
     // 일정 검색
-    QList<Schedule> getSchedulesByContainText(const QString &text) const;
+    QList<Schedule> getSchedulesByContainText(const QString &text, SearchType type) const;
 
     // 일정 목록 반환 (시작 시간, 종료 시간 기준으로 정렬)
     QList<Schedule> getSortedSchedules() const;

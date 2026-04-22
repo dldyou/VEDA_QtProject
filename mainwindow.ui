@@ -51,14 +51,42 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="leSearch">
-            <property name="placeholderText">
-             <string>Search by calendar title or content...</string>
-            </property>
-            <property name="clearButtonEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QComboBox" name="cbSearch">
+              <item>
+               <property name="text">
+                <string>Title</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Content</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Category</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>ALL</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="leSearch">
+              <property name="placeholderText">
+               <string>Search by calendar title or content...</string>
+              </property>
+              <property name="clearButtonEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="QListWidget" name="lwScheduleList"/>

@@ -69,5 +69,7 @@ private:
 
     // 일정 목록을 UI에 업데이트하는 함수
     void updateList();
+
+    SearchType getSearchType() const;
 };
 #endif // MAINWINDOW_H
