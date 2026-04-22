@@ -73,8 +73,7 @@ QMap<QString, QString> ScheduleCardWidget::iconMap = {
 };
 
 //아이콘 세팅
-void ScheduleCardWidget::setCategoryIcon(const QString &category)
-{
+void ScheduleCardWidget::setCategoryIcon(const QString &category) {
     QString path = iconMap.value(category, ":/icons/default.svg");
 
     QPixmap pix(path);
