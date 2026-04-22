@@ -15,7 +15,9 @@ ScheduleEditorDialog::ScheduleEditorDialog(QWidget *parent)
     // 캘린더 공통 설정 함수
     auto setupCalendar = [](QDateTimeEdit* dateEdit) {
         QCalendarWidget* cal = dateEdit->calendarWidget();
-        if (!cal) return;
+        if (!cal) {
+            return;
+        }
 
         // 캘린더 최소 크기 설정
         cal->setMinimumSize(400, 300);
@@ -33,40 +35,35 @@ ScheduleEditorDialog::ScheduleEditorDialog(QWidget *parent)
         cal->setWeekdayTextFormat(Qt::Sunday, sunHeader);
 
         // 월이 바뀔 때마다 날짜 스타일 재적용
-        QObject::connect(cal, &QCalendarWidget::currentPageChanged, cal,
-                         [cal](int year, int month) {
+        QObject::connect(cal, &QCalendarWidget::currentPageChanged, cal, [cal](int year, int month) {
+            // 기존 스타일 초기화
+            cal->setDateTextFormat(QDate(), QTextCharFormat());
+            // 토요일 스타일
+            QTextCharFormat satFormat;
+            satFormat.setForeground(QColor("#4078ff"));
+            // 일요일 스타일
+            QTextCharFormat sunFormat;
+            sunFormat.setForeground(QColor("#e84118"));
 
-                             // 기존 스타일 초기화
-                             cal->setDateTextFormat(QDate(), QTextCharFormat());
+            QDate firstDay(year, month, 1);
+            int days = firstDay.daysInMonth();
 
-                             // 토요일 스타일
-                             QTextCharFormat satFormat;
-                             satFormat.setForeground(QColor("#4078ff"));
+            // 해당 월의 모든 날짜 순회
+            for (int d = 1; d <= days; ++d) {
+                QDate date(year, month, d);
+                QTextCharFormat format;
 
-                             // 일요일 스타일
-                             QTextCharFormat sunFormat;
-                             sunFormat.setForeground(QColor("#e84118"));
+                if (date.dayOfWeek() == Qt::Saturday) {
+                    format = satFormat;
+                }
+                else if (date.dayOfWeek() == Qt::Sunday) {
+                    format = sunFormat;
+                }
 
-                             QDate firstDay(year, month, 1);
-                             int days = firstDay.daysInMonth();
-
-                             // 해당 월의 모든 날짜 순회
-                             for (int d = 1; d <= days; ++d) {
-                                 QDate date(year, month, d);
-
-                                 QTextCharFormat format;
-
-                                 if (date.dayOfWeek() == Qt::Saturday) {
-                                     format = satFormat;
-                                 }
-                                 else if (date.dayOfWeek() == Qt::Sunday) {
-                                     format = sunFormat;
-                                 }
-
-                                 // 날짜별 스타일 적용
-                                 cal->setDateTextFormat(date, format);
-                             }
-                         });
+                // 날짜별 스타일 적용
+                cal->setDateTextFormat(date, format);
+            }
+        });
 
         // 현재 날짜 기준으로 캘린더 초기 페이지 설정
         QDate today = QDate::currentDate();
@@ -92,10 +89,9 @@ ScheduleEditorDialog::ScheduleEditorDialog(QWidget *parent)
     ui->leCategoryDetail->setEnabled(false);
 
     // 카테고리 선택 시 detail 활성화
-    connect(ui->cbCategory, &QComboBox::currentIndexChanged, this,
-            [=](int index){
-                ui->leCategoryDetail->setEnabled(index >= 0);
-            });
+    connect(ui->cbCategory, &QComboBox::currentIndexChanged, this, [=](int index) {
+        ui->leCategoryDetail->setEnabled(index >= 0);
+    });
 
     // 전체 스타일시트 적용
     this->setStyleSheet(R"(
@@ -279,7 +275,7 @@ void ScheduleEditorDialog::on_btnSave_clicked() {
         endDateTime,
         category,
         categoryDetail
-        );
+    );
 
     // 데이터 저장 및 시그널 발생
     schedule.setData(scheduleData);

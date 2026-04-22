@@ -19,8 +19,7 @@ class ScheduleCardWidget;
  * 
  * - 일정의 제목, 시간, 카테고리 등을 표시하며, 마우스 오버 시 삭제 버튼이 나타납니다.
  */
-class ScheduleCardWidget : public QWidget
-{
+class ScheduleCardWidget : public QWidget {
     Q_OBJECT
 
 public:

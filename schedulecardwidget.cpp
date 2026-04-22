@@ -80,5 +80,5 @@ void ScheduleCardWidget::setCategoryIcon(const QString &category) {
 
     ui->lblCategoryIcon->setPixmap(
         pix.scaled(20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation)
-        );
+    );
 }

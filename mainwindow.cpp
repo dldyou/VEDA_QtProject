@@ -70,8 +70,7 @@ void MainWindow::on_cwCalender_selectionChanged() {
     updateList();
 }
 
-void MainWindow::updateList()
-{
+void MainWindow::updateList() {
     QString searchText = ui->leSearch->text();
 
     ui->lwScheduleList->clear();
@@ -84,7 +83,7 @@ void MainWindow::updateList()
         currentViewList = scheduleManager->getSchedulesByContainText(
             searchText,
             getSearchType()
-            );
+        );
     }
 
     // 테이블 출력
@@ -108,15 +107,14 @@ void MainWindow::on_btnAdd_clicked() {
     // 날짜 전달
     dlg.setDate(selectedDate);
 
-    connect(&dlg, &ScheduleEditorDialog::scheduleSaved,
-            this, [this](const Schedule &s){
-                scheduleManager->addSchedule(s);
-                scheduleManager->saveSchedules();
+    connect(&dlg, &ScheduleEditorDialog::scheduleSaved, this, [this](const Schedule &s){
+        scheduleManager->addSchedule(s);
+        scheduleManager->saveSchedules();
 
-                qDebug() << "시작 날짜:" << s.getStartTime().toString(Qt::ISODate);
-                qDebug() << "끝 날짜:" << s.getEndTime().toString(Qt::ISODate);
-                qDebug() << "저장 완료";
-            });
+        qDebug() << "시작 날짜:" << s.getStartTime().toString(Qt::ISODate);
+        qDebug() << "끝 날짜:" << s.getEndTime().toString(Qt::ISODate);
+        qDebug() << "저장 완료";
+    });
 
     dlg.exec();
 }
@@ -142,9 +140,7 @@ void MainWindow::on_lwScheduleList_itemSelectionChanged() {
     }
 }
 
-
-void MainWindow::on_lwScheduleList_itemDoubleClicked(QListWidgetItem *item)
-{
+void MainWindow::on_lwScheduleList_itemDoubleClicked(QListWidgetItem *item) {
     int row = ui->lwScheduleList->currentRow();
     if (row < 0) {
         QMessageBox::warning(this, "오류", "수정할 항목을 선택해주세요.");
@@ -156,11 +152,10 @@ void MainWindow::on_lwScheduleList_itemDoubleClicked(QListWidgetItem *item)
     ScheduleEditorDialog dlg(this);
     dlg.setSchedule(selected);
 
-    connect(&dlg, &ScheduleEditorDialog::scheduleSaved,
-            this, [this, selected](const Schedule &s) {
-                scheduleManager->updateSchedule(selected.getId(), s);
-                scheduleManager->saveSchedules();
-            });
+    connect(&dlg, &ScheduleEditorDialog::scheduleSaved, this, [this, selected](const Schedule &s) {
+        scheduleManager->updateSchedule(selected.getId(), s);
+        scheduleManager->saveSchedules();
+    });
 
     dlg.exec();
 }
@@ -188,9 +183,15 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
 SearchType MainWindow::getSearchType() const {
     QString text = ui->cbSearch->currentText();
 
-    if (text == "Title") return SearchType::Title;
-    if (text == "Content") return SearchType::Content;
-    if (text == "Category") return SearchType::Category;
+    if (text == "Title") {
+        return SearchType::Title;
+    }
+    if (text == "Content") {
+        return SearchType::Content;
+    }
+    if (text == "Category") {
+        return SearchType::Category;
+    }
 
     return SearchType::All;
 }

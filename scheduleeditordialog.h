@@ -15,8 +15,7 @@ class ScheduleEditorDialog;
  * 
  * - 사용자가 일정을 저장하면 `scheduleSaved(const Schedule &schedule)` 신호를 발생시켜 MainWindow에 변경된 일정을 전달합니다.
  */
-class ScheduleEditorDialog : public QDialog
-{
+class ScheduleEditorDialog : public QDialog {
     Q_OBJECT
 
 public:

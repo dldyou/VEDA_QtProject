@@ -21,10 +21,11 @@ QList<Schedule> ScheduleManager::getSchedulesByContainText(
     const QString &text, SearchType type) const {
     QList<Schedule> filtered;
 
-    if (text.isEmpty()) return filtered;
+    if (text.isEmpty()) {
+        return filtered;
+    }
 
     for (const auto &schedule : schedules) {
-
         bool match = false;
 
         switch (type) {
@@ -48,8 +49,9 @@ QList<Schedule> ScheduleManager::getSchedulesByContainText(
             break;
         }
 
-        if (match)
+        if (match) {
             filtered.append(schedule);
+        }
     }
 
     return filtered;
