@@ -18,9 +18,7 @@ void ScheduleManager::removeSchedule(QString id) {
 }
 
 QList<Schedule> ScheduleManager::getSchedulesByContainText(
-    const QString &text,
-    SearchType type) const
-{
+    const QString &text, SearchType type) const {
     QList<Schedule> filtered;
 
     if (text.isEmpty()) return filtered;
