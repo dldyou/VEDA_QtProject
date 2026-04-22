@@ -185,8 +185,7 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
     }
 }
 
-SearchType MainWindow::getSearchType() const
-{
+SearchType MainWindow::getSearchType() const {
     QString text = ui->cbSearch->currentText();
 
     if (text == "Title") return SearchType::Title;
