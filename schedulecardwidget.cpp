@@ -1,3 +1,4 @@
+#include <QPixmap>
 #include "schedulecardwidget.h"
 #include "ui_schedulecardwidget.h"
 #include <QGraphicsDropShadowEffect>
@@ -16,6 +17,8 @@ ScheduleCardWidget::ScheduleCardWidget(const Schedule &schedule, QWidget *parent
     QFontMetrics metrics(ui->lblDesc->font());
     QString elidedText = metrics.elidedText(schedule.getDescription(), Qt::ElideRight, 300); // 300px 기준
     ui->lblDesc->setText(elidedText);
+
+    setCategoryIcon(schedule.getCategory());
 
     QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(this);
     shadow->setBlurRadius(20);
@@ -58,4 +61,25 @@ void ScheduleCardWidget::enterEvent(QEnterEvent *event) {
 void ScheduleCardWidget::leaveEvent(QEvent *event) {
     ui->btnDelete->hide(); // 버튼 숨김
     QWidget::leaveEvent(event);
+}
+
+// 아이콘 매핑
+QMap<QString, QString> ScheduleCardWidget::iconMap = {
+    {"운동", ":/icons/exercise.svg"},
+    {"공부", ":/icons/study.svg"},
+    {"약속", ":/icons/promise.svg"},
+    {"업무", ":/icons/work.svg"},
+    {"취미", ":/icons/hobby.svg"}
+};
+
+//아이콘 세팅
+void ScheduleCardWidget::setCategoryIcon(const QString &category)
+{
+    QString path = iconMap.value(category, ":/icons/default.svg");
+
+    QPixmap pix(path);
+
+    ui->lblCategoryIcon->setPixmap(
+        pix.scaled(20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation)
+        );
 }

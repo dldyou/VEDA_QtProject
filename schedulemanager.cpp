@@ -27,7 +27,8 @@ QList<Schedule> ScheduleManager::getSchedulesByContainText(const QString &text) 
 
     for (const auto &schedule : schedules) {
         if (schedule.getTitle().contains(text, Qt::CaseInsensitive) ||
-            schedule.getDescription().contains(text, Qt::CaseInsensitive)) {
+            schedule.getDescription().contains(text, Qt::CaseInsensitive)||
+            schedule.getCategory().contains(text, Qt::CaseInsensitive)) {
             filtered.append(schedule);
         }
     }

@@ -45,4 +45,5 @@ private:
     Schedule schedule;
 };
 
+
 #endif // SCHEDULEEDITORDIALOG_H

@@ -73,46 +73,60 @@
      <item>
       <widget class="QComboBox" name="cbCategory">
        <property name="currentIndex">
-        <number>-1</number>
+        <number>0</number>
        </property>
        <item>
         <property name="text">
          <string>업무</string>
         </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>미팅</string>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/icons/work.svg</normaloff>:/icons/work.svg</iconset>
         </property>
        </item>
        <item>
         <property name="text">
          <string>약속</string>
         </property>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/icons/promise.svg</normaloff>:/icons/promise.svg</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>운동</string>
+        </property>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/icons/exercise.svg</normaloff>:/icons/exercise.svg</iconset>
         </property>
        </item>
        <item>
         <property name="text">
          <string>공부</string>
         </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>독서</string>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/icons/study.svg</normaloff>:/icons/study.svg</iconset>
         </property>
        </item>
        <item>
         <property name="text">
          <string>취미</string>
         </property>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/icons/hobby.svg</normaloff>:/icons/hobby.svg</iconset>
+        </property>
        </item>
        <item>
         <property name="text">
          <string>기타</string>
+        </property>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/icons/default.svg</normaloff>:/icons/default.svg</iconset>
         </property>
        </item>
       </widget>
@@ -159,6 +173,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

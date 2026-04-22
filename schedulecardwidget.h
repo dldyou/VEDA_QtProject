@@ -1,6 +1,7 @@
 #ifndef SCHEDULECARDWIDGET_H
 #define SCHEDULECARDWIDGET_H
 
+#include <QMap>
 #include <QWidget>
 #include <QStyle>
 #include <QEnterEvent>
@@ -42,6 +43,10 @@ private:
     Ui::ScheduleCardWidget *ui;
     // 일정 ID를 저장하는 멤버 변수
     QString id;
+
+    //아이콘 매핑을 위한 설정
+    void setCategoryIcon(const QString &category);
+    static QMap<QString, QString> iconMap;
 };
 
 #endif // SCHEDULECARDWIDGET_H

@@ -1,0 +1,11 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- container -->
+  <rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="2"></rect>
+
+  <!-- dots (wider spacing) -->
+  <circle cx="8.5" cy="12" r="1.2" fill="currentColor"></circle>
+  <circle cx="12" cy="12" r="1.2" fill="currentColor"></circle>
+  <circle cx="15.5" cy="12" r="1.2" fill="currentColor"></circle>
+
+</svg>

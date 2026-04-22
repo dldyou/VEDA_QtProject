@@ -27,7 +27,6 @@ QCalendarWidget {
     border-bottom: 1px solid #f1f5f9;
 }
 
-/* 3. 월/년도 선택 버튼 및 이동 화살표 */
 QCalendarWidget QToolButton {
     background-color: transparent;
     border-radius: 6px;
@@ -38,6 +37,37 @@ QCalendarWidget QToolButton {
 }
 QCalendarWidget QToolButton:hover {
     background-color: #f1f5f9;
+}
+QCalendarWidget QSpinBox {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    margin-right: 5px;
+    padding: 2px 5px;
+    selection-background-color: #3b82f6;
+    font-weight: bold;
+    min-width: 60px;
+}
+
+QCalendarWidget QSpinBox::up-button,
+QCalendarWidget QSpinBox::down-button {
+    width: 0px;
+    height: 0px;
+    border: none;
+    background: transparent;
+}
+
+/* 월/년도 선택 버튼 우측의 작은 화살표 제거 */
+QCalendarWidget QToolButton::menu-indicator {
+    image: none;          /* 화살표 이미지 제거 */
+    subcontrol-position: right center;
+    width: 0px;           /* 영역 너비 제거 */
+}
+
+/* 추가 팁: 화살표가 빠진 자리가 허전하다면 패딩을 조절해 중앙 정렬을 맞춥니다 */
+QCalendarWidget QToolButton {
+    padding-right: 0px;
+    padding-left: 0px;
 }
 
 /* 4. 년도 입력 스핀박스 (가장 구려 보이는 부분) */
